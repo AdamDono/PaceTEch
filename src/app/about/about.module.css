@@ -1,0 +1,80 @@
+.aboutMain {
+  min-height: 100vh;
+  position: relative;
+  padding: 180px 0 100px;
+}
+
+.aboutHero {
+  max-width: 900px;
+  margin-bottom: 8rem;
+}
+
+.aboutTitle {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 2.5rem;
+}
+
+.pillarGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 6rem;
+}
+
+.pillarCard {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  padding: 3rem;
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillarCard:hover {
+  border-color: var(--accent);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 82, 255, 0.05);
+}
+
+.pillarCard h3 {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--active-orange);
+  margin-bottom: 2rem;
+}
+
+.pillarCard p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--secondary);
+}
+
+.contentBlock {
+  max-width: 800px;
+  margin-top: 10rem;
+}
+
+.contentBlock h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 968px) {
+  .aboutMain {
+    padding: 140px 1.5rem 60px;
+  }
+  
+  .pillarGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutTitle {
+    font-size: 3rem;
+  }
+}

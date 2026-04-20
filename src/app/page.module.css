@@ -1,0 +1,117 @@
+.main {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Drifting Precision Grid */
+@keyframes gridDrift {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+
+.gridBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  background-image: 
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: -1;
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  opacity: 0.6;
+  animation: gridDrift 60s linear infinite;
+}
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.title {
+  font-size: clamp(3.5rem, 11vw, 8.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  margin-bottom: 4rem;
+  color: #000;
+}
+
+.heroText {
+  font-size: 1.15rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #8e8e93; /* Stealth Gray */
+  line-height: 1.7;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Infinite Logo Marquee */
+.marqueeWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  background: #fff;
+  overflow: hidden;
+}
+
+.marquee {
+  display: flex;
+  gap: 8rem;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee span {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #000;
+  letter-spacing: 0.2em;
+  opacity: 0.3;
+  text-transform: uppercase;
+}
+
+/* Animations - SNAPPY SPEED */
+@keyframes blurReveal {
+  0% { opacity: 0; filter: blur(10px); transform: translateY(20px); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+.animateReveal {
+  animation: blurReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay1 { animation-delay: 0.4s; }
+
+/* Mobile Responsiveness */
+@media (max-width: 968px) {
+  .title {
+    font-size: 4rem;
+    line-height: 0.95;
+    margin-bottom: 2rem;
+  }
+
+  .heroText {
+    font-size: 0.85rem;
+    max-width: 90%;
+    margin-bottom: 5rem;
+  }
+}
