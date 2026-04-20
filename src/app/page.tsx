@@ -139,7 +139,7 @@ export default function Home() {
               <span className={capStyles.tierNumber}>TIER 02</span>
               <h3 className={capStyles.tierTitle}>Ecosystem <br /> Deployment</h3>
               <p className={capStyles.tierDescription}>
-                A complete technical build-out—from UI/UX branding to high-performance, full-stack operational infrastructure.
+                A complete technical build-out from UI/UX branding to high-performance, full-stack operational infrastructure.
               </p>
               <ul className={capStyles.featureList}>
                 <li>Full-Stack Development</li>

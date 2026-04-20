@@ -64,7 +64,7 @@ export default function Navbar() {
           </button>
           <button 
             onClick={() => scrollTo("contact")} 
-            className={activeSection === "contact" ? styles.activeLink : ""}
+            className={`${activeSection === "contact" ? styles.activeLink : ""} ${styles.contactLink}`}
           >
             Contact
           </button>
