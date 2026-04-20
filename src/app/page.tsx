@@ -112,7 +112,7 @@ export default function Home() {
         <div className="container">
           <header className={capStyles.sectionHeader}>
             <span className={capStyles.sectionLabel}>Engagement Models</span>
-            <h2 className={aboutStyles.aboutTitle} style={{ fontSize: "3.5rem" }}>
+            <h2 className={aboutStyles.aboutTitle}>
               <span style={{ color: "var(--accent)" }}>Capabilities</span> for <br /> High-Growth Ventures.
             </h2>
           </header>
@@ -131,7 +131,7 @@ export default function Home() {
               </ul>
               <div className={capStyles.priceIndicator}>
                 <span className={capStyles.priceLabel}>Deployment Baseline</span>
-                <span className={capStyles.priceAmount}>R15,000+</span>
+                <span className={capStyles.priceAmount}>R7,500</span>
               </div>
             </div>
 
@@ -148,7 +148,7 @@ export default function Home() {
               </ul>
               <div className={capStyles.priceIndicator}>
                 <span className={capStyles.priceLabel}>Deployment Baseline</span>
-                <span className={capStyles.priceAmount}>R45,000+</span>
+                <span className={capStyles.priceAmount}>R25,000</span>
               </div>
             </div>
 
@@ -165,7 +165,7 @@ export default function Home() {
               </ul>
               <div className={capStyles.priceIndicator}>
                 <span className={capStyles.priceLabel}>Retainer Baseline</span>
-                <span className={capStyles.priceAmount}>R12,500 / mo</span>
+                <span className={capStyles.priceAmount}>R15,000+</span>
               </div>
             </div>
           </div>
