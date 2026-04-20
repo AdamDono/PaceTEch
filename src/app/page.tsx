@@ -29,7 +29,7 @@ export default function Home() {
         <div className={styles.animateReveal}>
           <h1 className={styles.title}>
             Engineering <br />
-            <span style={{ color: "var(--accent)" }}>Digital</span> <span style={{ color: "var(--active-orange)" }}>Scale</span>.
+            <span style={{ color: "var(--active-orange)" }}>Digital</span> <span style={{ color: "var(--active-orange)" }}>Scale</span>.
           </h1>
         </div>
         <div className={`${styles.animateReveal} ${styles.delay1}`}>
@@ -53,7 +53,7 @@ export default function Home() {
           <div className={styles.animateReveal}>
             <h1 className={aboutStyles.aboutTitle}>
               Engineering for the <br />
-              <span className="shimmer-text">Absolute.</span>
+              <span style={{ color: "var(--active-orange)" }}>Absolute.</span>
             </h1>
           </div>
           <div className={`${styles.animateReveal} ${styles.delay1}`}>
@@ -85,7 +85,7 @@ export default function Home() {
           <header className={projStyles.projectHeader}>
             <span className={projStyles.sectionLabel}>Ecosystem Stack</span>
             <h2 className={aboutStyles.aboutTitle} style={{ fontSize: "3.5rem" }}>
-              <span style={{ color: "var(--accent)" }}>Modern Solutions</span> for <br /> a Digital World.
+              <span style={{ color: "var(--active-orange)" }}>Modern Solutions</span> for <br /> a Digital World.
             </h2>
           </header>
 
@@ -113,7 +113,7 @@ export default function Home() {
           <header className={capStyles.sectionHeader}>
             <span className={capStyles.sectionLabel}>Engagement Models</span>
             <h2 className={aboutStyles.aboutTitle}>
-              <span style={{ color: "var(--accent)" }}>Capabilities</span> for <br /> High-Growth Ventures.
+              <span style={{ color: "var(--active-orange)" }}>Capabilities</span> for <br /> <span style={{ color: "var(--active-orange)" }}>Growth Ventures.</span>
             </h2>
           </header>
 
