@@ -122,7 +122,7 @@ export default function Home() {
               <span className={capStyles.tierNumber}>TIER 01</span>
               <h3 className={capStyles.tierTitle}>Tactical <br /> Architecture</h3>
               <p className={capStyles.tierDescription}>
-                For early-stage founders needing a high-fidelity technical blueprint and core logic before raising capital.
+                For small businesses requiring high-fidelity technical blueprints and core logic to modernize or deploy integrated in-house systems.
               </p>
               <ul className={capStyles.featureList}>
                 <li>Component Logic Mapping</li>
