@@ -29,7 +29,7 @@ export default function Home() {
         <div className={styles.animateReveal}>
           <h1 className={styles.title}>
             Engineering <br />
-            <span className="shimmer-text">Digital Scale.</span>
+            <span style={{ color: "var(--accent)" }}>Digital</span> <span style={{ color: "var(--active-orange)" }}>Scale</span>.
           </h1>
         </div>
         <div className={`${styles.animateReveal} ${styles.delay1}`}>
@@ -137,7 +137,7 @@ export default function Home() {
 
             <div className={capStyles.tierCard}>
               <span className={capStyles.tierNumber}>TIER 02</span>
-              <h3 className={capStyles.tierTitle}>Ecosystem <br /> Deployment</h3>
+                <h3 className={capStyles.tierTitle}>Ecosystem <br /> Deployment</h3>
               <p className={capStyles.tierDescription}>
                 A complete technical build-out from UI/UX branding to high-performance, full-stack operational infrastructure.
               </p>
