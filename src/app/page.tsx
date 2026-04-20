@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import aboutStyles from "./about/about.module.css";
 import projStyles from "./projects.module.css";
 import footerStyles from "./footer.module.css";
+import capStyles from "./capabilities.module.css";
 
 export default function Home() {
   const companies = [
@@ -102,6 +103,71 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 03.5: CAPABILITIES (SERVICES) */}
+      <section id="services" className={capStyles.capabilitiesSection}>
+        <div className="container">
+          <header className={capStyles.sectionHeader}>
+            <span className={capStyles.sectionLabel}>Engagement Models</span>
+            <h2 className={aboutStyles.aboutTitle} style={{ fontSize: "3.5rem" }}>
+              <span style={{ color: "var(--accent)" }}>Capabilities</span> for <br /> High-Growth Ventures.
+            </h2>
+          </header>
+
+          <div className={capStyles.tierGrid}>
+            <div className={capStyles.tierCard}>
+              <span className={capStyles.tierNumber}>TIER 01</span>
+              <h3 className={capStyles.tierTitle}>Tactical <br /> Architecture</h3>
+              <p className={capStyles.tierDescription}>
+                For early-stage founders needing a high-fidelity technical blueprint and core logic before raising capital.
+              </p>
+              <ul className={capStyles.featureList}>
+                <li>Component Logic Mapping</li>
+                <li>Hi-Fi Visual Prototyping</li>
+                <li>Infrastructure Assessment</li>
+              </ul>
+              <div className={capStyles.priceIndicator}>
+                <span className={capStyles.priceLabel}>Deployment Baseline</span>
+                <span className={capStyles.priceAmount}>R15,000+</span>
+              </div>
+            </div>
+
+            <div className={capStyles.tierCard}>
+              <span className={capStyles.tierNumber}>TIER 02</span>
+              <h3 className={capStyles.tierTitle}>Ecosystem <br /> Deployment</h3>
+              <p className={capStyles.tierDescription}>
+                A complete technical build-out—from UI/UX branding to high-performance, full-stack operational infrastructure.
+              </p>
+              <ul className={capStyles.featureList}>
+                <li>Full-Stack Development</li>
+                <li>Design System Creation</li>
+                <li>Live Beta Deployment</li>
+              </ul>
+              <div className={capStyles.priceIndicator}>
+                <span className={capStyles.priceLabel}>Deployment Baseline</span>
+                <span className={capStyles.priceAmount}>R45,000+</span>
+              </div>
+            </div>
+
+            <div className={capStyles.tierCard}>
+              <span className={capStyles.tierNumber}>TIER 03</span>
+              <h3 className={capStyles.tierTitle}>Infrastructure <br /> Management</h3>
+              <p className={capStyles.tierDescription}>
+                Strategic technical stewardship. Long-term engineering support to handle scaling and ecosystem integrity.
+              </p>
+              <ul className={capStyles.featureList}>
+                <li>Fractional CTO Support</li>
+                <li>Scaling Optimisation</li>
+                <li>24/7 Logic Monitoring</li>
+              </ul>
+              <div className={capStyles.priceIndicator}>
+                <span className={capStyles.priceLabel}>Retainer Baseline</span>
+                <span className={capStyles.priceAmount}>R12,500 / mo</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

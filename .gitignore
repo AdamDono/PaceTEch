@@ -4,3 +4,7 @@ node_modules/
 dist/
 build/
 *.log
+
+# Ignore all markdown except README
+*.md
+!README.md

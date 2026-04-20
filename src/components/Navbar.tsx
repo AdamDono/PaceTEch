@@ -8,12 +8,12 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["home", "about", "projects", "contact"];
+      const sections = ["home", "about", "projects", "services", "contact"];
       const current = sections.find((section) => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          return rect.top <= 150 && rect.bottom >= 150;
         }
         return false;
       });
@@ -55,6 +55,12 @@ export default function Navbar() {
             className={activeSection === "projects" ? styles.activeLink : ""}
           >
             Projects
+          </button>
+          <button 
+            onClick={() => scrollTo("services")} 
+            className={activeSection === "services" ? styles.activeLink : ""}
+          >
+            Services
           </button>
           <button 
             onClick={() => scrollTo("contact")} 
