@@ -7,6 +7,7 @@ import aboutStyles from "./about/about.module.css";
 import projStyles from "./projects.module.css";
 import footerStyles from "./footer.module.css";
 import capStyles from "./capabilities.module.css";
+import trustStyles from "./trust.module.css";
 
 export default function Home() {
   const companies = [
@@ -123,6 +124,41 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TRUST BUILDER 02: PROCESS */}
+      <section className={`${trustStyles.processSection} reveal`}>
+        <div className="container">
+          <div className={trustStyles.processHeader}>
+            <span className={trustStyles.processLabel}>How We Work</span>
+            <h2 className={trustStyles.processTitle}>
+              From Concept to <br />
+              <span className="gradient-text">Live Infrastructure.</span>
+            </h2>
+          </div>
+          <div className={trustStyles.processGrid}>
+            <div className={trustStyles.processStep}>
+              <div className={trustStyles.stepNode}>01</div>
+              <h3 className={trustStyles.stepTitle}>Discovery</h3>
+              <p className={trustStyles.stepDesc}>We map your business logic, define the system architecture, and identify every technical dependency before a single line is written.</p>
+            </div>
+            <div className={trustStyles.processStep}>
+              <div className={trustStyles.stepNode}>02</div>
+              <h3 className={trustStyles.stepTitle}>Blueprint</h3>
+              <p className={trustStyles.stepDesc}>A high-fidelity prototype is engineered first. You see exactly what you are getting before full development begins.</p>
+            </div>
+            <div className={trustStyles.processStep}>
+              <div className={trustStyles.stepNode}>03</div>
+              <h3 className={trustStyles.stepTitle}>Engineering</h3>
+              <p className={trustStyles.stepDesc}>Full-stack development with transparent progress. Every sprint is documented and shared in real time.</p>
+            </div>
+            <div className={trustStyles.processStep}>
+              <div className={trustStyles.stepNode}>04</div>
+              <h3 className={trustStyles.stepTitle}>Launch</h3>
+              <p className={trustStyles.stepDesc}>We deploy your infrastructure to production, configure monitoring, and provide a full technical handover.</p>
+            </div>
           </div>
         </div>
       </section>
