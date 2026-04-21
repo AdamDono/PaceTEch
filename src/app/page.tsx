@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import aboutStyles from "./about/about.module.css";
@@ -20,12 +23,29 @@ export default function Home() {
     { slug: "fastfood", name: "Fast Food", tagline: "Fulfillment Architecture", v: "v3.0 Operational" },
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealActive");
+        } else {
+          entry.target.classList.remove("revealActive");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const targets = document.querySelectorAll(".reveal");
+    targets.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className={styles.main}>
       <div className={styles.gridBackground}></div>
 
       {/* SECTION 01: HERO */}
-      <section id="home" className={styles.hero}>
+      <section id="home" className={`${styles.hero} reveal`}>
         <div className={styles.animateReveal}>
           <h1 className={styles.title}>
             Engineering <br />
@@ -48,7 +68,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 02: ABOUT */}
-      <section id="about" className={aboutStyles.aboutMain}>
+      <section id="about" className={`${aboutStyles.aboutMain} reveal`}>
         <div className="container">
           <div className={styles.animateReveal}>
             <h1 className={aboutStyles.aboutTitle}>
@@ -80,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 03: PROJECTS */}
-      <section id="projects" className={projStyles.projectsSection}>
+      <section id="projects" className={`${projStyles.projectsSection} reveal`}>
         <div className="container">
           <header className={projStyles.projectHeader}>
             <span className={projStyles.sectionLabel}>Ecosystem Stack</span>
@@ -108,7 +128,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 03.5: CAPABILITIES (SERVICES) */}
-      <section id="services" className={capStyles.capabilitiesSection}>
+      <section id="services" className={`${capStyles.capabilitiesSection} reveal`}>
         <div className="container">
           <header className={capStyles.sectionHeader}>
             <span className={capStyles.sectionLabel}>Engagement Models</span>
@@ -173,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 04: CONTACT TERMINAL */}
-      <section id="contact" className={footerStyles.contactSection}>
+      <section id="contact" className={`${footerStyles.contactSection} reveal`}>
         <div className="container">
           <div className={footerStyles.terminalBox}>
             <h2 className={footerStyles.terminalTitle}>
@@ -201,7 +221,7 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className={footerStyles.footer}>
+      <footer className={`${footerStyles.footer} reveal`}>
         <div className="container">
           <div className={footerStyles.footerGrid}>
             <div className={footerStyles.footerBrand}>

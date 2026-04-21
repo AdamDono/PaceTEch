@@ -40,6 +40,20 @@ body::after {
   z-index: 9999;
 }
 
+/* THE REVEAL PROTOCOL: LIQUID MOTION */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px) scale(0.985); /* Physical depth */
+  transition: opacity 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.revealActive {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
 @keyframes sweep {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
