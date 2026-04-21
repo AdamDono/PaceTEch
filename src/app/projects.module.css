@@ -106,3 +106,17 @@
     gap: 2.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .projectsSection {
+    padding: 80px 0;
+  }
+
+  .projectHeader {
+    margin-bottom: 3rem;
+  }
+
+  .projectGrid {
+    gap: 1.5rem;
+  }
+}

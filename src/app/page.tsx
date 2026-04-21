@@ -33,7 +33,7 @@ export default function Home() {
           entry.target.classList.remove("revealActive");
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.05 });
 
     const targets = document.querySelectorAll(".reveal");
     targets.forEach(el => observer.observe(el));
