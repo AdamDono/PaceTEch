@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
+
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,8 +29,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
-        <SpeedInsights />
-        <Analytics />
+
       </body>
     </html>
   );
