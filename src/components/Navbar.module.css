@@ -77,6 +77,79 @@
   flex-shrink: 0;
 }
 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 5px;
+}
+
+.bar {
+  width: 24px;
+  height: 2px;
+  background-color: var(--foreground);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.barOpen1 {
+  transform: translateY(8px) rotate(45deg);
+  background-color: var(--accent);
+}
+
+.barOpen2 {
+  transform: translateY(-8px) rotate(-45deg);
+  background-color: var(--accent);
+}
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 999;
+}
+
+.mobileMenuOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileMenu button {
+  background: none;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  letter-spacing: -0.02em;
+}
+
+.mobileMenu button:active {
+  transform: scale(0.95);
+  color: var(--accent);
+}
+
+.activeLinkMobile {
+  color: var(--accent) !important;
+}
+
 @media (max-width: 968px) {
   .navWrapper {
     top: 16px;
@@ -84,40 +157,31 @@
   }
 
   .navMinimal {
-    padding: 0.6rem 1rem;
-    gap: 1rem;
+    padding: 0.6rem 1.25rem;
+    justify-content: space-between;
   }
 
   .logo {
-    display: block; /* Logo back on mobile */
-    font-size: 0.8rem;
-    margin-right: 0.5rem;
+    display: block;
+    font-size: 0.9rem;
+    margin-right: 0;
   }
 
   .navLinks {
-    gap: 0.6rem;
-    width: auto;
-    justify-content: flex-end;
-    overflow: visible;
-  }
-
-  .navLinks button {
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-  }
-
-  .contactLink {
-    display: none; /* Removed Contact in mobile nav as requested */
+    display: none;
   }
 
   .navRightPlaceholder {
     display: none;
   }
+
+  .hamburger {
+    display: flex;
+  }
 }
 
 @media (max-width: 380px) {
-    .navLinks {
-        gap: 0.6rem;
-    }
+  .mobileMenu button {
+    font-size: 2rem;
+  }
 }

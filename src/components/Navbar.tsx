@@ -5,6 +5,7 @@ import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,52 +26,64 @@ export default function Navbar() {
   }, []);
 
   const scrollTo = (id: string) => {
+    setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  const navItems = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "projects", label: "Projects" },
+    { id: "services", label: "Services" },
+    { id: "contact", label: "Contact" },
+  ];
+
   return (
-    <div className={styles.navWrapper}>
-      <nav className={styles.navMinimal}>
-        <div className={styles.logo} onClick={() => scrollTo("home")} style={{ cursor: "pointer" }}>
-          PACE TECH
-        </div>
-        <div className={styles.navLinks}>
+    <>
+      <div className={styles.navWrapper}>
+        <nav className={styles.navMinimal}>
+          <div className={styles.logo} onClick={() => scrollTo("home")} style={{ cursor: "pointer" }}>
+            PACE TECH
+          </div>
+          
+          {/* Desktop Links */}
+          <div className={styles.navLinks}>
+            {navItems.map((item) => (
+              <button 
+                key={item.id}
+                onClick={() => scrollTo(item.id)} 
+                className={activeSection === item.id ? styles.activeLink : ""}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Hamburger */}
+          <div className={styles.hamburger} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <span className={`${styles.bar} ${isMobileMenuOpen ? styles.barOpen1 : ""}`}></span>
+            <span className={`${styles.bar} ${isMobileMenuOpen ? styles.barOpen2 : ""}`}></span>
+          </div>
+
+          <div className={styles.navRightPlaceholder}></div>
+        </nav>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ""}`}>
+        {navItems.map((item) => (
           <button 
-            onClick={() => scrollTo("home")} 
-            className={activeSection === "home" ? styles.activeLink : ""}
+            key={item.id}
+            onClick={() => scrollTo(item.id)} 
+            className={activeSection === item.id ? styles.activeLinkMobile : ""}
           >
-            Home
+            {item.label}
           </button>
-          <button 
-            onClick={() => scrollTo("about")} 
-            className={activeSection === "about" ? styles.activeLink : ""}
-          >
-            About
-          </button>
-          <button 
-            onClick={() => scrollTo("projects")} 
-            className={activeSection === "projects" ? styles.activeLink : ""}
-          >
-            Projects
-          </button>
-          <button 
-            onClick={() => scrollTo("services")} 
-            className={activeSection === "services" ? styles.activeLink : ""}
-          >
-            Services
-          </button>
-          <button 
-            onClick={() => scrollTo("contact")} 
-            className={`${activeSection === "contact" ? styles.activeLink : ""} ${styles.contactLink}`}
-          >
-            Contact
-          </button>
-        </div>
-        <div className={styles.navRightPlaceholder}></div>
-      </nav>
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
