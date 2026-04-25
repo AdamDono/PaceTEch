@@ -132,13 +132,13 @@
   background: none;
   border: none;
   font-family: var(--font-heading);
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--foreground);
   cursor: pointer;
   text-transform: uppercase;
   transition: all 0.2s ease;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .mobileMenu button:active {
@@ -177,11 +177,5 @@
 
   .hamburger {
     display: flex;
-  }
-}
-
-@media (max-width: 380px) {
-  .mobileMenu button {
-    font-size: 2rem;
   }
 }
