@@ -11,8 +11,8 @@ import trustStyles from "./trust.module.css";
 
 export default function Home() {
   const companies = [
-    "Global Finance Corp", "Orbit Logistics", "Edu Genesis", "Nexus Commerce", "Titan HR Systems",
-    "Global Finance Corp", "Orbit Logistics", "Edu Genesis", "Nexus Commerce", "Titan HR Systems"
+    "PACE FINANCE", "PACE ACADEMY", "BROSKY", "JAMA", "SPIKEBOT", "FAST FOOD",
+    "PACE FINANCE", "PACE ACADEMY", "BROSKY", "JAMA", "SPIKEBOT", "FAST FOOD"
   ];
 
   const projects = [
