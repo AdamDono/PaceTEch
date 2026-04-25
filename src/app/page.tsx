@@ -55,8 +55,7 @@ export default function Home() {
         </div>
         <div className={`${styles.animateReveal} ${styles.delay1}`}>
           <p className={styles.heroText}>
-            Pace Tech engineers high-utility digital infrastructure to power the next generation of the global economy. 
-            We distill world-changing concepts into robust, mission-critical software ecosystems.
+            We build high-performance web applications and custom software that help businesses scale, automate, and dominate their market. We turn complex concepts into robust, profit-driving ecosystems.
           </p>
         </div>
         <div className={styles.marqueeWrapper}>
@@ -86,15 +85,15 @@ export default function Home() {
           <div className={`${aboutStyles.pillarGrid} ${styles.animateReveal}`}>
             <div className={aboutStyles.pillarCard}>
               <h3>01. Precision</h3>
-              <p>Every line of code is a structural calculation. Our systems are built to handle billions of signals with zero-fault tolerance.</p>
+              <p>We engineer software that works flawlessly. No bugs, no crashes—just robust applications built to handle your business at peak volume.</p>
             </div>
             <div className={aboutStyles.pillarCard}>
               <h3>02. Utility</h3>
-              <p>We strip away the noise. Pace Tech builds high-utility tools for the advancement of human logistics.</p>
+              <p>We strip away the noise. We build tools that automate your operations, reduce overhead, and make your business run faster and leaner.</p>
             </div>
             <div className={aboutStyles.pillarCard}>
               <h3>03. Scale</h3>
-              <p>Infrastructure that grows with the world. Our ecosystems are designed to adapt to the shifting needs of a global economy.</p>
+              <p>Technology that grows as you do. We architect systems designed to handle exponential user growth without needing a complete rewrite.</p>
             </div>
           </div>
         </div>
@@ -176,9 +175,9 @@ export default function Home() {
           <div className={capStyles.tierGrid}>
             <div className={capStyles.tierCard}>
               <span className={capStyles.tierNumber}>TIER 01</span>
-              <h3 className={capStyles.tierTitle}>Tactical <br /> Architecture</h3>
+              <h3 className={capStyles.tierTitle}>Blueprint & <br /> Prototyping</h3>
               <p className={capStyles.tierDescription}>
-                For small businesses requiring high-fidelity technical blueprints and core logic to modernize or deploy integrated in-house systems.
+                For businesses that need a clear technical roadmap, visual designs, and core architecture planned out before committing to a full build.
               </p>
               <ul className={capStyles.featureList}>
                 <li>Component Logic Mapping</li>
@@ -193,9 +192,9 @@ export default function Home() {
 
             <div className={capStyles.tierCard}>
               <span className={capStyles.tierNumber}>TIER 02</span>
-              <h3 className={capStyles.tierTitle}>Ecosystem <br /> Deployment</h3>
+              <h3 className={capStyles.tierTitle}>Full-Stack <br /> Development</h3>
               <p className={capStyles.tierDescription}>
-                A complete technical build-out from UI/UX branding to high-performance, full-stack operational infrastructure.
+                A complete technical build-out from UI/UX branding to a high-performance, live application ready for your users.
               </p>
               <ul className={capStyles.featureList}>
                 <li>Full-Stack Development</li>
@@ -210,9 +209,9 @@ export default function Home() {
 
             <div className={capStyles.tierCard}>
               <span className={capStyles.tierNumber}>TIER 03</span>
-              <h3 className={capStyles.tierTitle}>Infrastructure <br /> Management</h3>
+              <h3 className={capStyles.tierTitle}>Growth & <br /> Maintenance</h3>
               <p className={capStyles.tierDescription}>
-                Strategic technical stewardship. Long-term engineering support to handle scaling and ecosystem integrity.
+                Fractional CTO support and ongoing maintenance. We act as your dedicated engineering team to scale and optimize your live product.
               </p>
               <ul className={capStyles.featureList}>
                 <li>Fractional CTO Support</li>
@@ -250,7 +249,7 @@ export default function Home() {
                 <label>Project Goals</label>
                 <textarea rows={4} placeholder="Briefly describe what you're looking to build..."></textarea>
               </div>
-              <button type="submit" className={footerStyles.submitBtn}>Send Inquiry</button>
+              <button type="submit" className={footerStyles.submitBtn}>Request a Technical Audit</button>
             </form>
           </div>
         </div>
