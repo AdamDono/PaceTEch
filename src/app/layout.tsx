@@ -15,12 +15,25 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Pace Tech | Engineering Digital Scale",
-  description: "We build high-performance web applications and custom software that help businesses scale, automate, and dominate their market.",
+  metadataBase: new URL("https://pacetech.dev"),
+  title: {
+    default: "Pace Tech | Custom Software & Web Applications",
+    template: "%s | Pace Tech"
+  },
+  description: "Pace Tech is a premium software engineering agency specializing in high-performance web applications, custom platforms, and enterprise digital infrastructure.",
+  keywords: ["Pace Tech", "Pace", "Software Development", "Web Applications", "Tech Agency", "Custom Software", "App Development", "Digital Scale", "South Africa Tech", "Fractional CTO", "Enterprise Software", "Next.js Development"],
+  authors: [{ name: "Pace Tech", url: "https://pacetech.dev" }],
+  creator: "Pace Tech",
+  publisher: "Pace Tech",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "Pace Tech | Engineering Digital Scale",
-    description: "High-performance web applications and custom software for high-growth businesses.",
-    url: "https://pacetech.co.za",
+    title: "Pace Tech | High-Performance Software Engineering",
+    description: "We engineer digital scale. Custom web applications, software ecosystems, and high-volume infrastructure for ambitious businesses.",
+    url: "https://pacetech.dev",
     siteName: "Pace Tech",
     locale: "en_ZA",
     type: "website",
@@ -28,7 +41,18 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Pace Tech | Engineering Digital Scale",
-    description: "High-performance web applications and custom software.",
+    description: "Premium software engineering and web app development.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
