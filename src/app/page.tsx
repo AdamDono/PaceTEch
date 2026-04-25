@@ -227,6 +227,57 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TRUST BUILDER 04: FOUNDER */}
+      <section className={`${trustStyles.founderSection} reveal`}>
+        <div className="container">
+          <div className={trustStyles.founderContent}>
+            <h2 className={trustStyles.founderQuote}>
+              "Most development agencies sell templates. We sell engineered business leverage. If it doesn't scale your operations, we don't build it."
+            </h2>
+            <div className={trustStyles.foundersWrapper}>
+              <div className={trustStyles.founderInfo}>
+                <div className={trustStyles.founderAvatar}></div>
+                <div className={trustStyles.founderDetails}>
+                  <span className={trustStyles.founderName}>Adam Dono</span>
+                  <span className={trustStyles.founderTitle}>Co-founder & CEO</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TRUST BUILDER 05: FAQ */}
+      <section className={`${trustStyles.faqSection} reveal`}>
+        <div className="container">
+          <div className={trustStyles.faqHeader}>
+            <span className={trustStyles.processLabel}>Clear The Board</span>
+            <h2 className={trustStyles.processTitle}>Frequently Asked Questions.</h2>
+          </div>
+          
+          <div className={trustStyles.faqContainer}>
+            <details className={trustStyles.faqItem}>
+              <summary className={trustStyles.faqQuestion}>Do I own the code and intellectual property?</summary>
+              <div className={trustStyles.faqAnswer}>
+                100%. Once the project is paid in full and deployed, the entire codebase and intellectual property is transferred to you. No vendor lock-in, no hidden licensing fees.
+              </div>
+            </details>
+            <details className={trustStyles.faqItem}>
+              <summary className={trustStyles.faqQuestion}>What if I just need a design or prototype first?</summary>
+              <div className={trustStyles.faqAnswer}>
+                That is exactly what Tier 01 (Blueprint & Prototyping) is for. We map the logic and design high-fidelity screens. If you decide to build it with us later, the cost of Tier 01 is deducted from your Tier 02 build.
+              </div>
+            </details>
+            <details className={trustStyles.faqItem}>
+              <summary className={trustStyles.faqQuestion}>Do you provide post-launch support?</summary>
+              <div className={trustStyles.faqAnswer}>
+                Yes. For businesses that need ongoing scaling and maintenance, our Tier 03 Retainer provides fractional CTO support and dedicated engineering hours every month.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 04: CONTACT TERMINAL */}
       <section id="contact" className={`${footerStyles.contactSection} reveal`}>
         <div className="container">
