@@ -1,13 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
+    // Only track scroll on the home page
+    if (pathname !== "/") return;
+
     const handleScroll = () => {
       const sections = ["home", "about", "projects", "services", "contact"];
       const current = sections.find((section) => {
@@ -23,13 +29,18 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
-  const scrollTo = (id: string) => {
+  const handleNavClick = (id: string) => {
     setIsMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+
+    if (pathname === "/") {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      router.push(`/#${id}`);
     }
   };
 
@@ -45,7 +56,7 @@ export default function Navbar() {
     <>
       <div className={styles.navWrapper}>
         <nav className={styles.navMinimal}>
-          <div className={styles.logo} onClick={() => scrollTo("home")} style={{ cursor: "pointer" }}>
+          <div className={styles.logo} onClick={() => handleNavClick("home")} style={{ cursor: "pointer" }}>
             PACE TECH
           </div>
           
@@ -54,8 +65,8 @@ export default function Navbar() {
             {navItems.map((item) => (
               <button 
                 key={item.id}
-                onClick={() => scrollTo(item.id)} 
-                className={activeSection === item.id ? styles.activeLink : ""}
+                onClick={() => handleNavClick(item.id)} 
+                className={activeSection === item.id && pathname === "/" ? styles.activeLink : ""}
               >
                 {item.label}
               </button>
@@ -77,8 +88,8 @@ export default function Navbar() {
         {navItems.map((item) => (
           <button 
             key={item.id}
-            onClick={() => scrollTo(item.id)} 
-            className={activeSection === item.id ? styles.activeLinkMobile : ""}
+            onClick={() => handleNavClick(item.id)} 
+            className={activeSection === item.id && pathname === "/" ? styles.activeLinkMobile : ""}
           >
             {item.label}
           </button>
