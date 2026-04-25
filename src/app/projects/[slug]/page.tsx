@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./project.module.css";
 import homeStyles from "../../page.module.css";
 
@@ -67,6 +68,22 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
       <div className={homeStyles.gridBackground}></div>
 
       <div className="container">
+        <Link href="/#projects" style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          textDecoration: "none",
+          color: "var(--secondary)",
+          fontWeight: "600",
+          fontSize: "0.9rem",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+          marginBottom: "3rem",
+          transition: "color 0.2s ease"
+        }}>
+          ← Back
+        </Link>
+
         <header className={styles.detailHeader}>
           <span className={styles.projectLabel} style={{ color: "var(--active-orange)" }}>{project.tagline}</span>
           <h1 className={styles.detailTitle}>{project.title}</h1>
