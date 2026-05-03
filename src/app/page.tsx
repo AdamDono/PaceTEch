@@ -20,7 +20,7 @@ export default function Home() {
     { slug: "academy", name: "Pace Academy", tagline: "Global Knowledge Layer", image: "/edu_platform_interface_1776563775928.png" },
     { slug: "brosky", name: "Brosky", tagline: "Infrastructure for Male Connection", image: "/hr_system_analytics_1776563802392.png" },
     { slug: "jama", name: "Jama", tagline: "High-Utility Connection", image: "/jama_ui.png" },
-    { slug: "spikebot", name: "Spike-AI", tagline: "Decentralized Intelligence ($SPIKE)", image: "/commerce_dashboard_ui_1776563745349.png" },
+    { slug: "spikebot", name: "Spike-AI", tagline: "Decentralized Intelligence ($SPIKE)", image: "/images/spiek 1.png" },
     { slug: "craveit", name: "Crave It", tagline: "Sell Food Online. Keep Every Rand.", image: "/images/craveit hero 1.png" },
   ];
 
