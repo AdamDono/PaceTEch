@@ -10,7 +10,7 @@ const projectData: any = {
     problem: "Most financial apps are glorified spreadsheets—they record the past but never shape the future. For South Africans, this lack of forward clarity is costing them dearly.",
     solution: "Pace Finance acts as a coach, not a calculator. By parsing ZAR-native data from FNB, ABSA, and others, we turn every transaction into a wealth-building opportunity.",
     liveLink: "https://pacedebt.onrender.com/",
-    images: ["/commerce_dashboard_ui_1776563745349.png", "/commerce_dashboard_ui_1776563745349.png", "/commerce_dashboard_ui_1776563745349.png"]
+    images: ["/images/pace finace dashboard 2 .png", "/images/pace financ 3.png", "/images/pace finance 4 .png"]
   },
   academy: {
     title: "Pace Academy",

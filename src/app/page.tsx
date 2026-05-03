@@ -16,12 +16,12 @@ export default function Home() {
   ];
 
   const projects = [
-    { slug: "finance", name: "Pace Finance", tagline: "Your Money. Finally Coached.", v: "Operational v4.2" },
-    { slug: "academy", name: "Pace Academy", tagline: "Global Knowledge Layer", v: "v2.1 Research" },
-    { slug: "brosky", name: "Brosky", tagline: "Infrastructure for Male Connection", v: "Active Build" },
-    { slug: "jama", name: "Jama", tagline: "High-Utility Connection", v: "v1.5 Alpha" },
-    { slug: "spikebot", name: "Spike-AI", tagline: "Decentralized Intelligence ($SPIKE)", v: "Steady State" },
-    { slug: "fastfood", name: "Crave It", tagline: "Sell Food Online. Keep Every Rand.", v: "v3.0 Operational" },
+    { slug: "finance", name: "Pace Finance", tagline: "Your Money. Finally Coached.", image: "/images/pace finance hero 1 .png" },
+    { slug: "academy", name: "Pace Academy", tagline: "Global Knowledge Layer", image: "/edu_platform_interface_1776563775928.png" },
+    { slug: "brosky", name: "Brosky", tagline: "Infrastructure for Male Connection", image: "/hr_system_analytics_1776563802392.png" },
+    { slug: "jama", name: "Jama", tagline: "High-Utility Connection", image: "/jama_ui.png" },
+    { slug: "spikebot", name: "Spike-AI", tagline: "Decentralized Intelligence ($SPIKE)", image: "/commerce_dashboard_ui_1776563745349.png" },
+    { slug: "fastfood", name: "Crave It", tagline: "Sell Food Online. Keep Every Rand.", image: "/images/craveit hero 1.png" },
   ];
 
   useEffect(() => {
@@ -113,10 +113,13 @@ export default function Home() {
             {projects.map((proj) => (
               <div key={proj.slug} className={projStyles.projectCard}>
                 <div className={projStyles.cardVisual}>
-                   <div style={{ width: "40px", height: "40px", border: "1px solid var(--accent)", opacity: 0.1, transform: "rotate(45deg)" }}></div>
+                   {proj.image ? (
+                     <img src={proj.image} alt={proj.name} className={projStyles.cardImage} />
+                   ) : (
+                     <div style={{ width: "40px", height: "40px", border: "1px solid var(--accent)", opacity: 0.1, transform: "rotate(45deg)" }}></div>
+                   )}
                 </div>
                 <div className={projStyles.cardInfo}>
-                  <span>{proj.v}</span>
                   <h3>{proj.name}</h3>
                   <p>{proj.tagline}</p>
                   <Link href={`/projects/${proj.slug}`} className={projStyles.cardLink}>Explore System →</Link>
