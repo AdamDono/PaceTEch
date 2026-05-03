@@ -49,13 +49,13 @@ const projectData: any = {
     images: ["/commerce_dashboard_ui_1776563745349.png", "/commerce_dashboard_ui_1776563745349.png", "/commerce_dashboard_ui_1776563745349.png"]
   },
   fastfood: {
-    title: "Fast Food",
-    tagline: "High-Volume Fulfillment Architecture",
-    description: "The technical backbone for ultra-high-speed culinary logistics, designed to homogenize ordering data across fragmented kitchen ecosystems.",
-    problem: "The culinary logistics industry is crippled by fragmented data silos and non-standardized fulfillment logic, leading to operational friction and scale-collapse.",
-    solution: "We engineered a singular, high-performance fulfillment protocol that synchronizes every node of the ordering flow—from terminal to handoff.",
-    liveLink: "https://food.pace.finance/",
-    images: ["/fastfood_ui.png", "/fastfood_ui.png", "/fastfood_ui.png"]
+    title: "Crave It",
+    tagline: "Sell Food Online. Keep Every Rand.",
+    description: "A zero-commission food ordering and restaurant management platform built exclusively for South African restaurants. Crave It gives every restaurant their own branded ordering page, PayFast ZAR payouts, and a live operations dashboard — without paying Uber Eats or Mr D a cent.",
+    problem: "South African restaurants are being bled dry by platforms like Uber Eats and Mr D, who charge up to 30% commission on every order. There was no local, commission-free alternative that gave restaurant owners full ownership of their revenue.",
+    solution: "Crave It engineers each restaurant their own fully-branded storefront with real-time order tracking, live delivery management, and integrated PayFast ZAR payouts. Restaurants go live in under 10 minutes with no monthly fee and 0% commission on sales.",
+    liveLink: "https://crave-it.co.za/",
+    images: ["/images/craveit hero 1.png", "/images/craveit 2.png", "/images/crave it 3 .png"]
   }
 };
 

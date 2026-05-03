@@ -21,7 +21,7 @@ export default function Home() {
     { slug: "brosky", name: "Brosky", tagline: "Infrastructure for Male Connection", v: "Active Build" },
     { slug: "jama", name: "Jama", tagline: "High-Utility Connection", v: "v1.5 Alpha" },
     { slug: "spikebot", name: "Spike-AI", tagline: "Decentralized Intelligence ($SPIKE)", v: "Steady State" },
-    { slug: "fastfood", name: "Fast Food", tagline: "Fulfillment Architecture", v: "v3.0 Operational" },
+    { slug: "fastfood", name: "Crave It", tagline: "Sell Food Online. Keep Every Rand.", v: "v3.0 Operational" },
   ];
 
   useEffect(() => {
