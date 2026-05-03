@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>$SPIKE — SpikeBot Presale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* DEFAULT (LIGHT) */
+    --bg: #ffffff;
+    --nav-bg: rgba(255,255,255,0.85);
+    --term-bg: rgba(0,0,0,0.03);
+    --surface: #ffffff;
+    --surface2: #f8fafc;
+    --border: rgba(0,0,0,0.06);
+    --border2: rgba(0,0,0,0.1);
+    --yellow: #f59e0b;
+    --yellow2: #d97706;
+    --yellow-dim: rgba(245,158,11,0.08);
+    --yellow-glow: rgba(245,158,11,0.04);
+    --white: #0f172a;
+    --muted: #475569;
+    --muted2: #94a3b8;
+    --red: #ef4444;
+    --green: #10b981;
+  }
+
+  [data-theme="dark"] {
+    --bg: #06080d;
+    --nav-bg: rgba(6,8,13,0.85);
+    --term-bg: rgba(0,0,0,0.4);
+    --surface: #0d1219;
+    --surface2: #131a24;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --yellow: #f5e642;
+    --yellow2: #ffe066;
+    --yellow-dim: rgba(245,230,66,0.12);
+    --yellow-glow: rgba(245,230,66,0.06);
+    --white: #f0ede6;
+    --muted: rgba(240,237,230,0.5);
+    --muted2: rgba(240,237,230,0.25);
+    --red: #ff4d4d;
+    --green: #3ddc84;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Figtree', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: crosshair;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* ── SCANLINE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.01) 2px, rgba(0,0,0,0.01) 4px);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; 
+    top: 0; 
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 60px;
+    border-bottom: 1px solid var(--border);
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo .dollar { color: var(--yellow); }
+  .nav-logo .dot {
+    width: 7px; height: 7px; background: var(--yellow); border-radius: 50%;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+  .nav-links { 
+    display: flex; gap: 2rem; 
+    position: absolute; left: 50%; transform: translateX(-50%);
+  }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    letter-spacing: 0.5px; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-socials { display: flex; gap: 1rem; align-items: center; margin-right: 1.5rem; }
+  .nav-socials a { color: var(--muted); transition: color 0.2s; display: flex; align-items: center; }
+  .nav-socials a:hover { color: var(--yellow); }
+  .nav-socials svg { width: 18px; height: 18px; fill: currentColor; }
+
+  .nav-cta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    background: var(--yellow); color: #06080d;
+    border: none; padding: 8px 20px; border-radius: 4px;
+    cursor: crosshair; letter-spacing: 0.5px;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .theme-toggle {
+    background: var(--surface2); border: 1px solid var(--border2);
+    width: 34px; height: 34px; border-radius: 4px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    margin-right: 0.5rem; transition: background 0.2s, color 0.2s;
+  }
+  .theme-toggle:hover { background: var(--border); color: var(--yellow); }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px var(--yellow-glow); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 7rem 0 5rem;
+    display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 3px;
+    color: var(--yellow); text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 24px; height: 1px; background: var(--yellow);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.2rem);
+    font-weight: 700; line-height: 0.95;
+    letter-spacing: -3px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--yellow); }
+  .hero h1 .outline {
+    -webkit-text-stroke: 1.5px var(--muted);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 15px; line-height: 1.75; color: var(--muted);
+    max-width: 460px; margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-tags {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; padding: 5px 12px;
+    border: 1px solid var(--border2);
+    border-radius: 2px; color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: none; } }
+
+  /* ── PRESALE CARD ── */
+  .presale-card {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    overflow: hidden;
+    animation: fadeUp 0.6s 0.15s ease both;
+    position: relative;
+  }
+  .presale-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--yellow), #ffaa00, var(--yellow));
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+  @keyframes shimmer { to { background-position: 200% 0; } }
+
+  .card-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-header-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .live-badge {
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--green);
+  }
+  .live-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 1s ease infinite; }
+
+  .card-body { padding: 1.5rem; }
+
+  .round-tabs {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px; margin-bottom: 1.5rem;
+  }
+  .round-tab {
+    padding: 10px 8px; border-radius: 4px; text-align: center; cursor: crosshair;
+    border: 1px solid var(--border); background: transparent; transition: all 0.2s;
+  }
+  .round-tab.active { background: var(--yellow-dim); border-color: rgba(245,230,66,0.3); }
+  .round-tab .rt-label { font-size: 10px; color: var(--muted2); margin-bottom: 4px; letter-spacing: 0.5px; }
+  .round-tab .rt-price {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+  }
+  .round-tab.active .rt-price { color: var(--yellow); }
+  .round-tab .rt-tag { font-size: 9px; color: var(--muted2); margin-top: 2px; }
+  .round-tab.active .rt-tag { color: rgba(245,230,66,0.6); }
+
+  .progress-section { margin-bottom: 1.5rem; }
+  .progress-meta {
+    display: flex; justify-content: space-between;
+    font-size: 12px; margin-bottom: 8px;
+  }
+  .progress-meta span:first-child { color: var(--muted); }
+  .progress-meta span:last-child {
+    font-family: 'IBM Plex Mono', monospace; color: var(--yellow); font-size: 11px;
+  }
+  .progress-track {
+    height: 4px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--yellow); border-radius: 100px;
+    width: 0%; transition: width 1.8s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .price-big {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 1.5rem;
+  }
+  .price-big .amount {
+    font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--yellow);
+  }
+  .price-big .unit { font-size: 13px; color: var(--muted); }
+  .price-big .next {
+    margin-left: auto; text-align: right;
+    font-size: 11px; color: var(--muted2); line-height: 1.5;
+  }
+  .price-big .next strong { display: block; color: var(--green); font-size: 12px; }
+
+  .calc-row { margin-bottom: 10px; }
+  .calc-input {
+    width: 100%; background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border2); border-radius: 4px;
+    padding: 11px 14px; color: var(--white);
+    font-family: 'IBM Plex Mono', monospace; font-size: 13px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .calc-input:focus { border-color: rgba(245,230,66,0.4); }
+  .calc-input::placeholder { color: var(--muted2); }
+
+  .calc-result {
+    background: rgba(245,230,66,0.05); border: 1px solid rgba(245,230,66,0.15);
+    border-radius: 4px; padding: 10px 14px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted);
+    margin-bottom: 1rem; min-height: 38px;
+  }
+  .calc-result strong { color: var(--yellow); }
+
+  .buy-btn {
+    width: 100%; background: var(--yellow); color: #06080d;
+    border: none; border-radius: 4px; padding: 14px;
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800;
+    letter-spacing: 0.5px; cursor: crosshair;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .buy-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,230,66,0.3); }
+
+  .card-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+  .countdown-row {
+    display: flex; gap: 0; justify-content: center;
+  }
+  .cd-unit { flex: 1; text-align: center; padding: 0.5rem 0; }
+  .cd-unit + .cd-unit { border-left: 1px solid var(--border); }
+  .cd-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px; font-weight: 600; color: var(--white);
+    display: block;
+  }
+  .cd-lbl { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted2); }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 0; margin-bottom: 6rem;
+  }
+  .stats-inner {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .stat-item {
+    text-align: center; padding: 0 2rem;
+    border-right: 1px solid var(--border);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-val {
+    font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+    color: var(--yellow); letter-spacing: -1px; display: block; margin-bottom: 4px;
+  }
+  .stat-lbl { font-size: 11px; color: var(--muted2); letter-spacing: 0.5px; }
+
+  /* ── SECTION HEADERS ── */
+  .section-header { margin-bottom: 3rem; }
+  .section-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--yellow);
+    margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px;
+  }
+  .section-eyebrow::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--yellow); opacity: 0.4; }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 800; letter-spacing: -1.5px; line-height: 1.05;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { padding: 0 0 6rem; }
+  .how-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .how-cell {
+    padding: 2.5rem; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 8px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .how-cell:hover { background: var(--surface2); transform: translateY(-2px); }
+  .how-num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    color: var(--yellow); letter-spacing: 2px; margin-bottom: 1rem;
+  }
+  .how-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 0.75rem; }
+  .how-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* ── WAVEFORM VISUALIZER ── */
+  .wave-section { padding: 4rem 0 6rem; }
+  .wave-container {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  }
+  .wave-toolbar {
+    padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .wave-toolbar-left {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted);
+  }
+  .dot-red { width: 10px; height: 10px; background: #ff5f57; border-radius: 50%; }
+  .dot-yellow { width: 10px; height: 10px; background: #febc2e; border-radius: 50%; }
+  .dot-green { width: 10px; height: 10px; background: #28c840; border-radius: 50%; }
+  .wave-canvas { display: block; width: 100%; height: 160px; }
+
+  /* ── TOKENOMICS ── */
+  .token-section { padding: 0 0 6rem; }
+  .token-layout { display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; }
+
+  .token-table { width: 100%; border-collapse: collapse; }
+  .token-table tr { border-bottom: 1px solid var(--border); }
+  .token-table tr:last-child { border-bottom: none; }
+  .token-table td { padding: 1rem 0; vertical-align: middle; }
+  .token-table td:last-child { text-align: right; }
+  .t-label { font-size: 14px; color: var(--white); display: flex; align-items: center; gap: 10px; }
+  .t-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .t-pct {
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600;
+  }
+  .t-amount { font-size: 11px; color: var(--muted2); margin-top: 2px; }
+  .t-bar-wrap { margin-top: 4px; }
+  .t-track { height: 2px; background: rgba(255,255,255,0.06); border-radius: 100px; overflow: hidden; }
+  .t-fill { height: 100%; border-radius: 100px; }
+
+  .token-info-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+  }
+  .tic-row {
+    padding: 1rem 1.25rem; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .tic-row:last-child { border-bottom: none; }
+  .tic-label { font-size: 12px; color: var(--muted); }
+  .tic-val {
+    font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: var(--white);
+  }
+  .tic-val.yellow { color: var(--yellow); }
+  .tic-val.green { color: var(--green); }
+
+  /* ── BURN MECHANIC ── */
+  .burn-section { padding: 0 0 6rem; }
+  .burn-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    position: relative;
+  }
+  .burn-title { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+  .burn-title .fire { color: var(--red); }
+  .burn-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem; max-width: 440px; }
+  
+  .burn-steps { position: relative; padding-left: 1.5rem; }
+  .burn-steps::before { 
+    content: ''; position: absolute; left: 6px; top: 10px; bottom: 10px; width: 1px; 
+    background: linear-gradient(to bottom, var(--yellow), transparent); opacity: 0.2; 
+  }
+  .burn-step { position: relative; margin-bottom: 2rem; padding-left: 1.5rem; }
+  .burn-step-num { 
+    position: absolute; left: -22px; top: 0; 
+    width: 24px; height: 24px; background: var(--surface2); 
+    border: 1px solid var(--border); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; color: var(--yellow);
+    box-shadow: 0 0 15px var(--yellow-glow);
+  }
+  .burn-step-text { font-size: 13px; line-height: 1.6; color: var(--muted); }
+  .burn-step-text strong { display: block; color: var(--white); font-size: 14px; margin-bottom: 4px; }
+  
+  /* CUSTOM SLIDER */
+  input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; }
+  input[type=range]:focus { outline: none; }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%; height: 6px; cursor: pointer; background: var(--surface2); border: 1px solid var(--border); border-radius: 3px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    height: 20px; width: 20px; border-radius: 50%; background: var(--yellow); cursor: pointer; -webkit-appearance: none; margin-top: -8px;
+    box-shadow: 0 0 15px rgba(245,158,11,0.4);
+  }
+  
+  /* ── COMPOUNDING SECTION ── */
+  .compound-section { padding: 0 0 6rem; }
+  .compound-grid { display: grid; grid-template-columns: 320px 1fr; gap: 3rem; align-items: center; }
+  .compound-info-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem;
+  }
+  .compound-chart-wrap {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem;
+    position: relative; overflow: hidden; height: 320px;
+  }
+  .compound-canvas { width: 100%; height: 100%; display: block; }
+  
+  .compound-stat { margin-bottom: 1.5rem; }
+  .compound-stat-lbl { font-size: 11px; color: var(--muted2); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; display: block; }
+  .compound-stat-val { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--yellow); }
+  .compound-stat-sub { font-size: 10px; color: var(--muted2); font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
+
+  /* ── LIVE BOT TERMINAL ── */
+  .bot-terminal {
+    background: var(--term-bg); border: 1px solid var(--border2); border-radius: 6px;
+    padding: 1rem; margin-top: 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    max-width: 440px; position: relative; overflow: hidden; color: var(--white);
+  }
+  .bot-terminal::before { content: ''; position: absolute; top:0; left:0; right:0; height:1px; background: var(--yellow); opacity: 0.3; }
+  .term-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .term-lbl { color: var(--muted2); text-transform: uppercase; letter-spacing: 1px; }
+  .term-val { color: var(--white); }
+  .term-val.glow { color: var(--yellow); text-shadow: 0 0 8px rgba(245,230,66,0.5); }
+  .term-val.green { color: var(--green); }
+
+  /* ── TIERS SECTION ── */
+  .tier-section { padding: 0 0 6rem; }
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .tier-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem;
+    position: relative; transition: transform 0.2s, border-color 0.2s;
+  }
+  .tier-card:hover { transform: translateY(-4px); border-color: var(--yellow-dim); }
+  .tier-card.featured { border-color: var(--yellow); background: var(--surface2); }
+  .tier-badge {
+    position: absolute; top: 1rem; right: 1rem; font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 1px; padding: 3px 8px; border-radius: 2px;
+    background: var(--yellow-dim); color: var(--yellow);
+  }
+  .tier-name { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .tier-amount { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--yellow); margin-bottom: 1.5rem; }
+  .tier-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .tier-list li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; }
+  .tier-list li::before { content: '✓'; color: var(--green); flex-shrink: 0; }
+  
+  /* ── ROADMAP ── */
+  .road-section { padding: 0 0 6rem; }
+  .road-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .road-card {
+    background: var(--surface); padding: 2rem;
+    border: 1px solid var(--border); border-radius: 8px;
+    position: relative; overflow: hidden;
+  }
+  .road-card.active { background: var(--surface2); }
+  .road-card.active::after {
+    content: 'LIVE';
+    position: absolute; top: 1rem; right: 1rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px;
+    background: var(--yellow-dim); color: var(--yellow);
+    border: 1px solid rgba(245,230,66,0.25); padding: 3px 8px; border-radius: 2px;
+  }
+  .road-phase {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted2);
+    letter-spacing: 2px; margin-bottom: 0.5rem;
+  }
+  .road-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 1rem; }
+  .road-items { list-style: none; }
+  .road-items li {
+    font-size: 13px; color: var(--muted); padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .road-items li:last-child { border-bottom: none; }
+  .road-items li::before { content: '→'; color: var(--yellow); font-size: 11px; }
+
+  /* ── TEAM SECTION ── */
+  .team-section { padding: 0 0 6rem; }
+  .team-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 3rem; display: flex; align-items: center; gap: 3rem;
+  }
+  .founder-photo {
+    width: 160px; height: 160px; border-radius: 8px; background: var(--surface2);
+    border: 1px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .founder-photo::after {
+    content: 'DEALER'; position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--yellow); color: #000; font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; font-weight: 800; text-align: center; padding: 4px 0; letter-spacing: 1px;
+  }
+  .founder-bio { flex: 1; }
+  .founder-name { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .founder-role { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--yellow); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
+  .founder-text { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+  .founder-links { display: flex; gap: 1.5rem; }
+  .founder-link { 
+    display: flex; align-items: center; gap: 8px; color: var(--muted); text-decoration: none; 
+    font-size: 12px; font-family: 'IBM Plex Mono', monospace; transition: color 0.2s;
+  }
+  .founder-link:hover { color: var(--yellow); }
+  .founder-link svg { width: 16px; height: 16px; fill: currentColor; }
+  
+  /* ── FAQ ── */
+  .faq-section { padding: 0 0 6rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--border); padding: 1.25rem 0; cursor: crosshair;
+  }
+  .faq-q {
+    font-size: 15px; font-weight: 500; display: flex;
+    justify-content: space-between; align-items: center; gap: 1rem;
+  }
+  .faq-arrow { color: var(--yellow); font-size: 18px; transition: transform 0.2s; }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 13px; color: var(--muted); line-height: 1.75;
+    max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding-top: 0.75rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    font-size: 11px; color: var(--muted2);
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--yellow); }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a { color: var(--muted2); text-decoration: none; transition: color 0.2s; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  .footer-socials a:hover { color: var(--yellow); }
+  .footer-disclaimer { max-width: 600px; line-height: 1.6; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .compound-grid { grid-template-columns: 1fr; }
+    .tier-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 860px) {
+    .container { padding: 0 1.5rem; }
+    .hero { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+    .hero-left { display: flex; flex-direction: column; align-items: center; }
+    h1 { font-size: 3rem; line-height: 1; }
+    .hero-sub { font-size: 16px; margin: 1.5rem auto; }
+    .bot-terminal { margin: 2rem auto 0; width: 100%; }
+    .hero-tags { justify-content: center; }
+    
+    .stats-inner { grid-template-columns: 1fr 1fr; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { border-right: 1px solid var(--border); }
+    .how-grid { grid-template-columns: 1fr; }
+    .token-layout { grid-template-columns: 1fr; }
+    .burn-card { grid-template-columns: 1fr; }
+    .road-grid { grid-template-columns: 1fr; }
+    .road-card:first-child { border-radius: 8px 8px 0 0; }
+    .road-card:last-child { border-radius: 0 0 8px 8px; }
+    nav .nav-links { display: none; }
+    .nav-socials { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 2.5rem; }
+    .hero-eyebrow { font-size: 10px; }
+    .stats-inner { grid-template-columns: 1fr; }
+    .stat-item { border-right: none !important; border-bottom: 1px solid var(--border); }
+    .stat-item:last-child { border-bottom: none; }
+    .compound-chart-wrap { height: 240px; padding: 1rem; }
+    .compound-stat-val { font-size: 1.25rem; }
+  }
+  /* ── RESPONSIVENESS ── */
+  @media (max-width: 1024px) {
+    .road-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 900px) {
+    .container { padding: 0 1.5rem; }
+    .hero-content { grid-template-columns: 1fr; text-align: center; justify-items: center; padding-top: 6rem; }
+    .hero-text h1 { font-size: 3.5rem; }
+    .hero-text p { margin-inline: auto; }
+    .hero-actions { justify-content: center; }
+    .bot-terminal { margin-inline: auto; }
+    
+    .nav-links { display: none; } /* Hide desktop nav for now */
+    
+    .how-grid { grid-template-columns: 1fr; }
+    .burn-card { grid-template-columns: 1fr; gap: 3rem; }
+    .compound-grid { grid-template-columns: 1fr; }
+    .team-card { flex-direction: column; text-align: center; gap: 2rem; }
+    .founder-links { justify-content: center; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-text h1 { font-size: 2.8rem; }
+    .stats-strip { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; padding: 2rem 1.5rem; }
+    .road-grid { grid-template-columns: 1fr; }
+    .token-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .tier-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: 2.2rem; }
+    .nav-logo span { display: none; }
+    .burn-title { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="dot"></div>
+    <span><span class="dollar">$</span>SPIKE</span>
+  </div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#tokenomics">Tokenomics</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://docs.google.com/document/d/1Xp_P3Rn2CDzrgWTzkbC2BnkoY_Cc6UZX/edit?usp=sharing&ouid=110453302811853504517&rtpof=true&sd=true" target="_blank" style="color: var(--yellow); font-weight: 700;">Whitepaper</a>
+  </div>
+  <div style="display: flex; align-items: center; margin-left: auto;">
+    <div class="nav-socials">
+      <a href="https://t.me/spiketoken" target="_blank" title="Telegram">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.35-.49.97-.74 3.81-1.65 6.35-2.75 7.61-3.3 3.61-1.56 4.36-1.83 4.85-1.84.11 0 .35.03.5.16.13.11.17.26.18.37z"/></svg>
+      </a>
+      <a href="https://x.com/spiketoken" target="_blank" title="Twitter (X)">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+    </div>
+    <button class="theme-toggle" id="theme-btn" title="Toggle Mode">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+    <button class="nav-cta" onclick="document.getElementById('presale').scrollIntoView({behavior:'smooth'})">BUY $SPIKE</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="container">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Presale Live — $58,400 Target — Base Network</div>
+      <h1>The Bot<br>That <em>Spikes</em><br><span class="outline">Your Stack</span></h1>
+      <p class="hero-sub">$pike is an automated "Spike Harvester" that uses high-speed math and strict risk controls to turn market volatility into steady, compounded profit.</p>
+      
+      <div style="margin: 1.5rem 0; display: flex; gap: 1rem;">
+        <a href="https://docs.google.com/document/d/1Xp_P3Rn2CDzrgWTzkbC2BnkoY_Cc6UZX/edit?usp=sharing&ouid=110453302811853504517&rtpof=true&sd=true" target="_blank" class="btn btn-outline" style="padding: 0.75rem 1.5rem; text-decoration: none; display: inline-block; border-radius: 4px; font-weight: 700;">Read Whitepaper</a>
+      </div>
+      
+      <!-- BOT TERMINAL -->
+      <div class="bot-terminal">
+        <div class="term-row"><span class="term-lbl">Engine Status</span><span class="term-val glow">● ACTIVE — ANALYZING CRASH 1000</span></div>
+        <div class="term-row"><span class="term-lbl">Current Vault</span><span class="term-val">$10,000.00</span></div>
+        <div class="term-row"><span class="term-lbl">Today's P&L</span><span class="term-val green">+$1,421.10 (14.2%)</span></div>
+        <div class="term-row"><span class="term-lbl">Next Burn</span><span class="term-val">12D 04H 12M</span></div>
+        <div style="height: 1px; background: var(--border2); margin: 8px 0;"></div>
+        <div style="font-size: 9px; opacity: 0.4;">[SYSTEM] RE-CALIBRATING SPIKE-AI MODULE 2.4...</div>
+      </div>
+
+      <div class="hero-tags" style="margin-top: 2rem;">
+        <span class="tag">DERIV NATIVE</span>
+        <span class="tag">BASE NETWORK</span>
+        <span class="tag">BUY & BURN</span>
+        <span class="tag">1.5% MAX WALLET</span>
+        <span class="tag">100M SUPPLY</span>
+      </div>
+    </div>
+
+    <!-- PRESALE CARD -->
+    <div class="presale-card" id="presale">
+      <div class="card-header">
+        <span class="card-header-title">Token Presale</span>
+        <span class="live-badge"><span class="live-dot"></span>Live Now</span>
+      </div>
+      <div class="card-body">
+        <div class="round-tabs">
+          <div class="round-tab" id="tab-private" onclick="setRound('private')">
+            <div class="rt-label">Private</div>
+            <div class="rt-price" style="color:var(--yellow);">$0.0008</div>
+            <div class="rt-tag">23M tokens (Vesting)</div>
+          </div>
+          <div class="round-tab active" id="tab-public" onclick="setRound('public')">
+            <div class="rt-label">Public</div>
+            <div class="rt-price">$0.001</div>
+            <div class="rt-tag">40M tokens</div>
+          </div>
+          <div class="round-tab" id="tab-launch" onclick="setRound('launch')">
+            <div class="rt-label">Launch</div>
+            <div class="rt-price">$0.005</div>
+            <div class="rt-tag">CEX listing</div>
+          </div>
+        </div>
+
+        <div class="progress-section">
+          <div class="progress-meta">
+            <span>Public round progress</span>
+            <span id="pct-label">58% filled</span>
+          </div>
+          <div class="progress-track" style="background: rgba(0,0,0,0.05);"><div class="progress-fill" id="pbar"></div></div>
+        </div>
+
+        <div class="price-big">
+          <div>
+            <div style="font-size:11px;color:var(--muted2);letter-spacing:1px;margin-bottom:4px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;">Current Price</div>
+            <div class="amount" id="current-price">$0.0010</div>
+          </div>
+          <div class="unit">USDT</div>
+          <div class="next">
+            <strong id="upside-pct">+400% at launch</strong>
+            <span>Target: $58,400</span>
+          </div>
+        </div>
+
+        <div class="calc-row">
+          <input class="calc-input" type="number" id="invest-in" placeholder="Enter USDT amount..." oninput="calcTokens()" />
+        </div>
+        <div class="calc-result" id="calc-out">Enter an amount to calculate your $SPIKE allocation.</div>
+
+        <button class="buy-btn">⚡ BUY $SPIKE NOW</button>
+      </div>
+      <div class="card-footer">
+        <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--muted2);text-align:center;margin-bottom:10px;letter-spacing:1px;text-transform:uppercase;">Presale Ends In</div>
+        <div class="countdown-row">
+          <div class="cd-unit"><span class="cd-val" id="cd-d">18</span><span class="cd-lbl">Days</span></div>
+          <div class="cd-unit"><span class="cd-val" id="cd-h">07</span><span class="cd-lbl">Hrs</span></div>
+          <div class="cd-unit"><span class="cd-val" id="cd-m">44</span><span class="cd-lbl">Min</span></div>
+          <div class="cd-unit"><span class="cd-val" id="cd-s">12</span><span class="cd-lbl">Sec</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-val" id="raised-counter">$0</span>
+        <span class="stat-lbl">Raised in Presale</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">Threshold 5.0</span>
+        <span class="stat-lbl">Sensitivity Sensor</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">5-10%</span>
+        <span class="stat-lbl">Daily Target Range</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">90-Day</span>
+        <span class="stat-lbl">Compounding Cycle</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THE STRATEGY: SPIKE HARVESTING -->
+<section class="container strategy-section" id="how">
+  <div class="section-header">
+    <div class="section-eyebrow">The Method</div>
+    <div class="section-title">The "3-Minute Hold"<br>Spike Harvesting System</div>
+  </div>
+  <div class="how-grid">
+    <div class="how-cell" style="grid-column: span 1;">
+      <div class="how-num">01 — TARGETING</div>
+      <div class="how-title">Threshold Sensor 5.0</div>
+      <div class="how-desc">Spike-AI doesn't guess. It uses a Threshold Sensor (set to 5.0) to measure the raw kinetic force of market moves. Only actual spikes trigger a signal.</div>
+    </div>
+    <div class="how-cell">
+      <div class="how-num">02 — HARVESTING</div>
+      <div class="how-title">Safe Candle Extraction</div>
+      <div class="how-desc">Immediately after a spike, the bot executes an institutional-grade order (BUY for Crash / SELL for Boom) and holds for exactly 3 minutes to harvest post-spike stability.</div>
+    </div>
+    <div class="how-cell">
+      <div class="how-num">03 — COMMAND</div>
+      <div class="how-title">Telegram Command Center</div>
+      <div class="how-desc">Your remote control. Change stakes ($0.35 to $5.00+), toggle risk modes, and receive instant trade alerts directly from your phone — anywhere in the world.</div>
+    </div>
+    <div class="how-cell">
+      <div class="how-num">04 — COMPOUNDING</div>
+      <div class="how-title">90-Day Accumulation</div>
+      <div class="how-desc">The soul of the bot is the 90-Day Plan. By compounding 5-10% daily wins, the system attempts to turn small accounts into significant fortunes over 3 months.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RISK MANAGEMENT: SAFETY LOCKS -->
+<section class="container safety-section">
+  <div class="section-header">
+    <div class="section-eyebrow">Risk Control</div>
+    <div class="section-title">Institutional-Grade<br>Safety Locks</div>
+  </div>
+  <div class="safety-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+    <div class="safety-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem;">
+      <div style="color: var(--red); font-family: 'IBM Plex Mono', monospace; font-size: 11px; margin-bottom: 1rem;">LOCK 01</div>
+      <div class="how-title">Drawdown Protection</div>
+      <div class="how-desc">Zero emotions. If daily losses cross a pre-set threshold, the bot kills all active trades and locks the system to protect your core capital.</div>
+    </div>
+    <div class="safety-card" style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 2rem;">
+      <div style="color: var(--yellow); font-family: 'IBM Plex Mono', monospace; font-size: 11px; margin-bottom: 1rem;">LOCK 02</div>
+      <div class="how-title">Spike Cooldown</div>
+      <div class="how-desc">Double-spike protection. If a secondary spike occurs, the sensor detects the volatility chaos and forces a cooling period until the market stabilizes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVEFORM -->
+<section class="container wave-section">
+  <div class="wave-container">
+    <div class="wave-toolbar">
+      <div class="wave-toolbar-left">
+        <span class="dot-red"></span>
+        <span class="dot-yellow"></span>
+        <span class="dot-green"></span>
+        <span style="margin-left:8px;">CRASH 1000 — Live Spike Detection</span>
+      </div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--green);display:flex;align-items:center;gap:6px;">
+        <span class="live-dot"></span> BOT ACTIVE
+      </div>
+    </div>
+    <canvas class="wave-canvas" id="waveCanvas"></canvas>
+  </div>
+</section>
+
+<!-- TOKENOMICS -->
+<section class="container token-section" id="tokenomics">
+  <div class="section-header">
+    <div class="section-eyebrow">Token Structure</div>
+    <div class="section-title">$SPIKE Tokenomics</div>
+  </div>
+  <div class="token-layout">
+    <div>
+      <table class="token-table">
+        <tr>
+          <td>
+            <div class="t-label"><span class="t-dot" style="background:#3ddc84;"></span>Public Presale</div>
+            <div class="t-bar-wrap"><div class="t-track"><div class="t-fill" style="width:40%;background:#3ddc84;"></div></div></div>
+          </td>
+          <td>
+            <div class="t-pct" style="color:#3ddc84;">40.0%</div>
+            <div class="t-amount">40,000,000 $SPIKE</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="t-label"><span class="t-dot" style="background:#60a5fa;"></span>Private Round (6mo Vest)</div>
+            <div class="t-bar-wrap"><div class="t-track"><div class="t-fill" style="width:23%;background:#60a5fa;"></div></div></div>
+          </td>
+          <td>
+            <div class="t-pct" style="color:#60a5fa;">23.0%</div>
+            <div class="t-amount">23,000,000 $SPIKE</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="t-label"><span class="t-dot" style="background:#f5e642;"></span>Liquidity (DEX + CEX Reserve)</div>
+            <div class="t-bar-wrap"><div class="t-track"><div class="t-fill" style="width:13%;background:#f5e642;"></div></div></div>
+          </td>
+          <td>
+            <div class="t-pct" style="color:#f5e642;">13.0%</div>
+            <div class="t-amount">13,000,000 $SPIKE</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="t-label"><span class="t-dot" style="background:var(--red);"></span>Initial Supply Burn</div>
+            <div class="t-bar-wrap"><div class="t-track"><div class="t-fill" style="width:19%;background:var(--red);"></div></div></div>
+          </td>
+          <td>
+            <div class="t-pct" style="color:var(--red);">19.0%</div>
+            <div class="t-amount">19,000,000 $SPIKE</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="t-label"><span class="t-dot" style="background:#fb923c;"></span>Team & Marketing</div>
+            <div class="t-bar-wrap"><div class="t-track"><div class="t-fill" style="width:5%;background:#fb923c;"></div></div></div>
+          </td>
+          <td>
+            <div class="t-pct" style="color:#fb923c;">5.0%</div>
+            <div class="t-amount">5,000,000 $SPIKE</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="t-label"><span class="t-dot" style="background:#3ddc84;"></span>Presale Hard-Cap Raise</div>
+          </td>
+          <td>
+            <div class="t-pct" style="color:#3ddc84;">$58,400</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <div class="token-info-card">
+        <div class="tic-row"><span class="tic-label">Ticker</span><span class="tic-val yellow">$SPIKE</span></div>
+        <div class="tic-row"><span class="tic-label">Private Round</span><span class="tic-val">$0.0008 (Locked)</span></div>
+        <div class="tic-row"><span class="tic-label">Launch Price</span><span class="tic-val yellow">$0.0050</span></div>
+        <div class="tic-row" style="background:rgba(255,255,255,0.02); padding: 0.75rem 1.25rem;">
+          <div style="display:flex; flex-direction:column; gap:4px; width:100%;">
+            <span class="tic-label" style="font-size:9px; text-transform:uppercase; letter-spacing:1px; color:var(--muted2);">Contract Address (CA)</span>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted2);">TBA (Deploying on Base...)</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </div>
+          </div>
+        </div>
+        <div class="tic-row"><span class="tic-label">Initial MCAP</span><span class="tic-val green">$405,000</span></div>
+        <div class="tic-row" style="background: rgba(16,185,129,0.04); border-top: 1px solid var(--border); margin: 0.5rem 0;">
+          <div style="display:flex; flex-direction:column; gap:8px; width:100%; padding: 0.5rem 0;">
+            <span class="tic-label" style="font-size:10px; text-transform:uppercase; letter-spacing:1px;">Raise Allocation ($58,400)</span>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--white);">$15,000 <span style="font-size:9px; color:var(--muted2);">BOT VAULT</span></div>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--white);">$15,000 <span style="font-size:9px; color:var(--muted2);">LOCKED LP</span></div>
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--white);">$28,400 <span style="font-size:9px; color:var(--muted2);">MKT / TEAM</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tic-row"><span class="tic-label">Total Hard Cap</span><span class="tic-val green">$58,400</span></div>
+        <div class="tic-row" style="background: rgba(255,77,77,0.03); border-top: 1px solid var(--border);">
+          <div style="display:flex; flex-direction:column; gap:8px; width:100%; padding: 0.25rem 0;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="tic-label">Buy/Sell Tax</span>
+              <span class="tic-val" style="color:var(--red);">2%</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:9px; font-family:'IBM Plex Mono',monospace; opacity:0.6;">
+              <span>1% AUTO BUY-BACK</span>
+              <span>1% AUTO BURN</span>
+            </div>
+          </div>
+        </div>
+        <div class="tic-row"><span class="tic-label">Presale → Launch</span><span class="tic-val green">×5 (400% gain)</span></div>
+        <div class="tic-row"><span class="tic-label">Max Wallet Limit</span><span class="tic-val" style="color:var(--yellow);">1.5% (1.5M $SPIKE)</span></div>
+        <div class="tic-row"><span class="tic-label">Liquidity Lock</span><span class="tic-val">2 Years</span></div>
+        <div class="tic-row" style="background: rgba(255,255,255,0.03); border-top: 1px solid var(--border); font-size: 10px; color: var(--muted2); line-height: 1.4;">
+          * Liquidity includes 3M tokens for initial DEX launch + 10M tokens reserved for future CEX Listings (Locked).
+        </div>
+        <div class="tic-row" style="background: rgba(245,230,66,0.03); border-top: 1px solid var(--border); margin-top: 0.5rem; padding: 1.5rem 1.25rem;">
+          <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+            <span class="tic-label" style="letter-spacing: 1px; font-size: 10px; text-transform: uppercase;">Security Audit</span>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="background: rgba(255,255,255,0.05); border: 1px solid var(--border2); padding: 8px 12px; border-radius: 4px; display: flex; align-items: center; gap: 8px; flex: 1;">
+                <div style="width: 20px; height: 20px; background: #fbbf24; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 12px; font-family: 'Syne', sans-serif;">C</div>
+                <span class="tic-val" style="font-size: 11px; letter-spacing: 0.5px;">CertiK Audit — <span style="color: var(--yellow);">In Progress</span></span>
+              </div>
+            </div>
+            <div style="font-size: 9px; color: var(--muted2); font-family: 'IBM Plex Mono', monospace;">Verifying contract architecture...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUY BACK & BURN -->
+<section class="container burn-section" id="burn">
+  <div class="burn-card">
+    <div>
+      <div class="burn-title"><span class="fire">Burn</span> What<br>the Bot Earns</div>
+      <p class="burn-desc">Post-launch, a $15,000 seed vault is allocated to the SpikeBot. Every 14 days, a significant portion of the bot's cumulative profits are used to buy $SPIKE and burn it — permanently reducing supply forever.</p>
+      <div class="burn-steps">
+        <div class="burn-step">
+          <div class="burn-step-num">1</div>
+          <div class="burn-step-text"><strong>Bot closes a profitable session</strong> — daily P&L is calculated from Deriv trading activity.</div>
+        </div>
+        <div class="burn-step">
+          <div class="burn-step-num">2</div>
+          <div class="burn-step-text"><strong>20% of profits allocated</strong> to the buy-back wallet automatically.</div>
+        </div>
+        <div class="burn-step">
+          <div class="burn-step-num">3</div>
+          <div class="burn-step-text"><strong>$SPIKE purchased every 14 days</strong> — bi-weekly buy pressure keeps the floor moving upwards.</div>
+        </div>
+        <div class="burn-step">
+          <div class="burn-step-num">4</div>
+          <div class="burn-step-text"><strong>Tokens sent to burn address</strong> — permanently removed from the 100M supply. On-chain verifiable.</div>
+        </div>
+      </div>
+    </div>
+    <div class="burn-visual">
+      <canvas id="burnChart" width="300" height="300"></canvas>
+      <div style="text-align:center;margin-top:1rem;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted2);letter-spacing:1px;">PROJECTED SUPPLY</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--yellow);" id="burn-supply">100,000,000</div>
+        <div style="font-size:11px;color:var(--muted2);">decreasing daily</div>
+        <input type="range" id="burn-slider" min="0" max="365" value="0" step="1" style="width:100%;margin-top:1rem;" oninput="updateBurn(this.value)">
+        <div style="font-size:11px;color:var(--muted2);margin-top:4px;" id="burn-day-label">Day 0 of 365</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPOUNDING PROJECTION -->
+<section class="container compound-section">
+  <div class="section-header">
+    <div class="section-eyebrow">The Engine</div>
+    <div class="section-title">Projection: The Power<br>of 10% Compounding</div>
+  </div>
+  <div class="compound-grid">
+    <div class="compound-info-card">
+      <div class="compound-stat">
+        <span class="compound-stat-lbl">Initial Seed Vault</span>
+        <div class="compound-stat-val">$15,000</div>
+        <div class="compound-stat-sub">Allocated post-launch</div>
+      </div>
+      <div class="compound-stat">
+        <span class="compound-stat-lbl">Day 14 (1st Burn)</span>
+        <div class="compound-stat-val">$37,974</div>
+        <div class="compound-stat-sub">~280% growth projected</div>
+      </div>
+      <div class="compound-stat">
+        <span class="compound-stat-lbl">Day 30 Target</span>
+        <div class="compound-stat-val">$174,494</div>
+        <div class="compound-stat-sub">Exponential bot performance</div>
+      </div>
+      <div style="margin-top: 2rem; padding: 1rem; background: rgba(245,230,66,0.05); border: 1px solid rgba(245,230,66,0.2); border-radius: 4px;">
+        <p style="font-size: 12px; line-height: 1.6; color: var(--muted);">Targeting 5-10% daily. By automatically compounding small "Harvested" wins, the 90-Day plan aims for logarithmic growth of the core trading vault.</p>
+      </div>
+    </div>
+    <div class="compound-chart-wrap">
+      <div style="position: absolute; top: 1.5rem; left: 2rem; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted2); letter-spacing: 1px;">30-DAY BOT VAULT PERFORMANCE ($)</div>
+      <canvas id="growthCanvas" class="compound-canvas"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNAL TIERS -->
+<section class="container tier-section" id="tiers">
+  <div class="section-header">
+    <div class="section-eyebrow">Staking Utility</div>
+    <div class="section-title">Stake $SPIKE to<br>Unlock Bot Signals</div>
+  </div>
+  <div class="tier-grid">
+    <div class="tier-card">
+      <div class="tier-name">BRONZE</div>
+      <div class="tier-amount">Hold 10,000 $SPIKE</div>
+      <ul class="tier-list">
+        <li>Real-time Telegram Signals</li>
+        <li>Standard Latency</li>
+        <li>BOOM 1000 / CRASH 1000</li>
+        <li>Weekly Performance Reports</li>
+      </ul>
+    </div>
+    <div class="tier-card featured">
+      <div class="tier-badge">POPULAR</div>
+      <div class="tier-name">SILVER</div>
+      <div class="tier-amount">Hold 50,000 $SPIKE</div>
+      <ul class="tier-list">
+        <li>Priority Signal Delivery</li>
+        <li>"Conservative" Bot Strategy</li>
+        <li>All BOOM & CRASH Pairs</li>
+        <li>On-chain Trading CSVs</li>
+        <li>Voting on Burn Frequency</li>
+      </ul>
+    </div>
+    <div class="tier-card">
+      <div class="tier-badge">ELITE</div>
+      <div class="tier-name">SPIKE WHALE</div>
+      <div class="tier-amount">Hold 250,000 $SPIKE</div>
+      <ul class="tier-list">
+        <li>Instant Latency (Direct API)</li>
+        <li>"Aggressive" High-Spike Modes</li>
+        <li>NASDAQ & Crypto Pairs (Beta)</li>
+        <li>Private Whale DAO Access</li>
+        <li>1-on-1 Strategy Setup</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="container road-section" id="roadmap">
+  <div class="section-header">
+    <div class="section-eyebrow">Timeline</div>
+    <div class="section-title">90-Day Launch Plan</div>
+  </div>
+  <div class="road-grid">
+    <div class="road-card active">
+      <div class="road-phase">PHASE 01 — MONTH 1</div>
+      <div class="road-title">Seed & Presale</div>
+      <ul class="road-items">
+        <li>Smart contract deployment on Base</li>
+        <li>Private round (23M tokens @ $0.0008)</li>
+        <li>Public presale launch (40M @ $0.001)</li>
+        <li>Live trading dashboard goes public</li>
+        <li>Telegram bot & alert system live</li>
+      </ul>
+    </div>
+    <div class="road-card">
+      <div class="road-phase">PHASE 02 — MONTH 2</div>
+      <div class="road-title">Bot Integration</div>
+      <ul class="road-items">
+        <li>Token-gated signal tiers go live</li>
+        <li>Conservative + Aggressive profiles</li>
+        <li>First buy-back & burn event</li>
+        <li>Profit-Share Vault opens</li>
+        <li>DAO governance framework</li>
+      </ul>
+    </div>
+    <div class="road-card">
+      <div class="road-phase">PHASE 03 — MONTH 3</div>
+      <div class="road-title">Global Expansion</div>
+      <ul class="road-items">
+        <li>CEX listing at $0.005 launch price</li>
+        <li>NASDAQ & crypto pair modules</li>
+        <li>Multi-broker expansion (Binance/ByBit)</li>
+        <li>Affiliate Marketing Portal go-live</li>
+        <li>Governance DAO voting enabled</li>
+      </ul>
+    </div>
+    <div class="road-card">
+      <div class="road-phase">PHASE 04 — ECOSYSTEM</div>
+      <div class="road-title">The Spike Vision</div>
+      <ul class="road-items">
+        <li>The Spike App (iOS & Android)</li>
+        <li>Institutional Spike-AI API access</li>
+        <li>$25M Bot Vault target milestone</li>
+        <li>Annual "Spike Summit" (Lagos/Dubai)</li>
+        <li>Full cross-chain bridge (Arbitrum)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="container team-section" id="team">
+  <div class="section-header">
+    <div class="section-eyebrow">The Founder</div>
+    <div class="section-title">Verified Transparency</div>
+  </div>
+  <div class="team-card">
+    <div class="founder-photo">
+      <!-- Generated Placeholder Avatar -->
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--muted2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    </div>
+    <div class="founder-bio">
+      <span class="founder-role">Lead Architect & Developer</span>
+      <h2 class="founder-name">Adam Dono</h2>
+      <p class="founder-text">
+        Fullstack Developer with 4+ years of professional engineering experience. A veteran of the DeFi and crypto space since 2021, Adam specializes in building high-performance full-stack applications and automated trading products from the ground up.
+      </p>
+      <div class="founder-links">
+        <a href="https://x.com/Adam_Dono_" target="_blank" class="founder-link">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          X / Twitter @Adam_Dono_
+        </a>
+        <a href="https://www.linkedin.com/in/adam-dono-85b766242/" target="_blank" class="founder-link">
+          <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          LinkedIn / Adam Dono
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="container faq-section" id="faq">
+  <div class="section-header">
+    <div class="section-eyebrow">Questions</div>
+    <div class="section-title">FAQ</div>
+  </div>
+  <div id="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">How does the 5-10% daily ROI target work? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">SpikeBot targets a 5-10% gain on the account's opening balance per session. This is achieved by catching the "post-spike" stability on BOOM/CRASH indices. The Anti-Loss brain kills trades instantly if drawdown limits are hit, ensuring your principal capital remains safe even on volatile days.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the buy-back and burn mechanic? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">20% of each profitable trading session's profits are used to purchase $SPIKE tokens from the open market. These tokens are immediately sent to a dead address (0x000...dead) and permanently removed from the 100M supply. Every burn transaction is verifiable on Base.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Why Base network? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">Base offers near-zero gas fees, Ethereum-level security, and fast transaction finality — making micro buy-back transactions economically viable. It also benefits from Coinbase's infrastructure and growing DEX liquidity.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the difference between private and public presale rounds? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">The private round (23M tokens at $0.0008) is invite-only and subject to a 6-month linear vesting term. The public presale (40M tokens at $0.001) is open to all and fully liquid at launch. Both are at a steep discount to the $0.005 launch price.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is the smart contract audited? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">A formal third-party audit is in progress and will be published before the public presale closes. Liquidity will be locked for 2 years on launch. Always do your own research before investing.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: var(--surface2);">
+  <div class="footer-logo">$SPIKE</div>
+  <div class="footer-socials">
+    <a href="https://docs.google.com/document/d/1Xp_P3Rn2CDzrgWTzkbC2BnkoY_Cc6UZX/edit?usp=sharing&ouid=110453302811853504517&rtpof=true&sd=true" target="_blank">Whitepaper</a>
+    <a href="https://t.me/spiketoken" target="_blank">Telegram</a>
+    <a href="https://x.com/spiketoken" target="_blank">Twitter (X)</a>
+    <a href="#how">Docs</a>
+  </div>
+  <div class="footer-disclaimer">
+    ⚠️ Investing in crypto presales involves significant risk including total loss of capital. The 10% daily ROI is a target, not a guarantee. Past bot performance does not guarantee future results. This is not financial advice. Always do your own research.
+  </div>
+  <div>© 2026 SpikeBot</div>
+</footer>
+
+<script>
+/* ─── COUNTDOWN ─── */
+const end = Date.now() + 18*864e5 + 7*36e5 + 44*6e4 + 12e3;
+function tick() {
+  const d = end - Date.now();
+  if (d < 0) return;
+  const days = Math.floor(d/864e5);
+  const hrs = Math.floor((d%864e5)/36e5);
+  const mins = Math.floor((d%36e5)/6e4);
+  const secs = Math.floor((d%6e4)/1e3);
+  document.getElementById('cd-d').textContent = String(days).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(hrs).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(mins).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(secs).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+/* ─── RAISED COUNTER ─── */
+let raisedN = 0;
+const raisedTarget = 58400;
+function animRaised() {
+  if (raisedN < raisedTarget) {
+    raisedN = Math.min(raisedN + 980, raisedTarget);
+    document.getElementById('raised-counter').textContent = '$' + raisedN.toLocaleString();
+    requestAnimationFrame(animRaised);
+  }
+}
+setTimeout(animRaised, 600);
+
+/* ─── PROGRESS BAR ─── */
+setTimeout(() => { document.getElementById('pbar').style.width = '58%'; }, 400);
+
+/* ─── ROUND SWITCHER ─── */
+const rounds = {
+  private: { price: 0.0008, upside: '6-Month Vesting', label: 'Private round progress', pct: 'Active (Invite Only)' },
+  public:  { price: 0.001,  upside: '5x at Launch',    label: 'Public round progress',  pct: '58% filled' },
+  launch:  { price: 0.005,  upside: 'Launch price',    label: 'Exchange listing',       pct: 'TGE soon' }
+};
+let activeRound = 'public';
+function setRound(r) {
+  activeRound = r;
+  document.querySelectorAll('.round-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-'+r).classList.add('active');
+  const d = rounds[r];
+  document.getElementById('current-price').textContent = '$' + d.price.toFixed(4);
+  document.getElementById('upside-pct').textContent = d.upside;
+  document.getElementById('pct-label').textContent = d.pct;
+  calcTokens();
+}
+
+/* ─── TOKEN CALCULATOR ─── */
+function calcTokens() {
+  const amt = parseFloat(document.getElementById('invest-in').value);
+  const box = document.getElementById('calc-out');
+  if (!amt || amt <= 0) { box.innerHTML = 'Enter an amount to calculate your $SPIKE allocation.'; return; }
+  const price = rounds[activeRound].price;
+  const tokens = Math.floor(amt / price);
+  const launchVal = (tokens * 0.005).toFixed(2);
+  box.innerHTML = 'You receive: <strong>' + tokens.toLocaleString() + ' $SPIKE</strong> &nbsp;·&nbsp; Worth <strong>$' + parseFloat(launchVal).toLocaleString() + '</strong> at launch';
+}
+
+/* ─── WAVEFORM CANVAS ─── */
+const wc = document.getElementById('waveCanvas');
+const wctx = wc.getContext('2d');
+let wPoints = [];
+let wFrame = 0;
+function initWave() {
+  wc.width = wc.offsetWidth * window.devicePixelRatio;
+  wc.height = wc.offsetHeight * window.devicePixelRatio;
+  wctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  const w = wc.offsetWidth, h = wc.offsetHeight;
+  for (let i = 0; i < w; i++) wPoints.push(h/2 + (Math.random()-0.5)*10);
+}
+function drawWave() {
+  const w = wc.offsetWidth, h = wc.offsetHeight;
+  wctx.clearRect(0,0,w,h);
+  wPoints.shift();
+  let newY = wPoints[wPoints.length-1] + (Math.random()-0.48)*8;
+  if (wFrame % 90 < 3) newY = h * 0.15;
+  if (wFrame % 90 >= 3 && wFrame % 90 < 8) newY = h * 0.85;
+  newY = Math.max(10, Math.min(h-10, newY));
+  wPoints.push(newY);
+  wctx.beginPath();
+  wctx.strokeStyle = '#f5e642';
+  wctx.lineWidth = 1.5;
+  wctx.moveTo(0, wPoints[0]);
+  for (let i = 1; i < wPoints.length; i++) wctx.lineTo(i, wPoints[i]);
+  wctx.stroke();
+  if (wFrame % 90 >= 0 && wFrame % 90 < 8) {
+    const x = wPoints.length - 1;
+    wctx.beginPath();
+    wctx.arc(x, newY, 5, 0, Math.PI*2);
+    wctx.fillStyle = '#3ddc84';
+    wctx.fill();
+    wctx.fillStyle = '#3ddc84';
+    wctx.font = '10px IBM Plex Mono, monospace';
+    wctx.fillText('SPIKE DETECTED', x - 90, newY - 10);
+  }
+  wFrame++;
+  requestAnimationFrame(drawWave);
+}
+initWave(); drawWave();
+
+/* ─── BURN SUPPLY SLIDER ─── */
+function updateBurn(day) {
+  const initial = 100000000;
+  const baselineBurn = 19000000; // 19% initial burn
+  const maxBurnPct = 0.35 + 0.19; // 54% total eventual burn
+  const additionalBurn = initial * 0.35 * (1 - Math.pow(Math.E, -0.005 * day));
+  const totalBurned = baselineBurn + additionalBurn;
+  const remaining = initial - totalBurned;
+  
+  document.getElementById('burn-supply').textContent = Math.floor(remaining).toLocaleString();
+  document.getElementById('burn-day-label').textContent = 'Projected Timeline: Day ' + day;
+  drawBurnDonut(remaining, initial);
+}
+function drawBurnDonut(remaining, total) {
+  const c = document.getElementById('burnChart');
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0,0,300,300);
+  const cx=150, cy=130, r=90, lw=18;
+  const burned = total - remaining;
+  const burnAngle = (burned/total) * Math.PI * 2;
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+  ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=lw; ctx.stroke();
+  ctx.beginPath(); ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+burnAngle);
+  ctx.strokeStyle='#ff4d4d'; ctx.lineWidth=lw; ctx.lineCap='round'; ctx.stroke();
+  ctx.fillStyle='#f5e642'; ctx.font='700 28px Syne, sans-serif'; ctx.textAlign='center';
+  ctx.fillText(((burned/total)*100).toFixed(1)+'%', cx, cy+6);
+  ctx.fillStyle='rgba(240,237,230,0.4)'; ctx.font='11px IBM Plex Mono, monospace';
+  ctx.fillText('BURNED', cx, cy+24);
+}
+drawBurnDonut(81000000, 100000000);
+
+/* ─── GROWTH CHART ─── */
+function initGrowthChart() {
+  const g = document.getElementById('growthCanvas');
+  const gctx = g.getContext('2d');
+  g.width = g.offsetWidth * window.devicePixelRatio;
+  g.height = g.offsetHeight * window.devicePixelRatio;
+  gctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  const w = g.offsetWidth, h = g.offsetHeight;
+  const padding = 40;
+  const initial = 15000;
+  const dailyRate = 1.1;
+  const days = 30;
+  const target = initial * Math.pow(dailyRate, days);
+  
+  function getY(val) { return h - padding - ((val / target) * (h - padding * 2)); }
+  function getX(day) { return padding + (day / days) * (w - padding * 2); }
+
+  // Draw Grid
+  gctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  gctx.lineWidth = 1;
+  for(let i=0; i<=5; i++) {
+    const y = getY(target * (i/5));
+    gctx.beginPath(); gctx.moveTo(padding, y); gctx.lineTo(w-padding, y); gctx.stroke();
+  }
+
+  // Draw Line
+  gctx.beginPath();
+  gctx.strokeStyle = '#f5e642';
+  gctx.lineWidth = 3;
+  gctx.moveTo(getX(0), getY(initial));
+  for(let d=1; d<=days; d++) {
+    const val = initial * Math.pow(dailyRate, d);
+    gctx.lineTo(getX(d), getY(val));
+  }
+  gctx.stroke();
+
+  // Glow
+  gctx.shadowBlur = 15; gctx.shadowColor = 'rgba(245,230,66,0.4)';
+  gctx.stroke(); gctx.shadowBlur = 0;
+
+  // Dots for Key Days
+  [0, 14, 30].forEach(d => {
+    const val = initial * Math.pow(dailyRate, d);
+    gctx.beginPath();
+    gctx.arc(getX(d), getY(val), 4, 0, Math.PI*2);
+    gctx.fillStyle = '#fff';
+    gctx.fill();
+    gctx.fillStyle = '#f5e642';
+    gctx.font = '700 10px IBM Plex Mono, monospace';
+    gctx.fillText('Day ' + d, getX(d) - 15, getY(val) - 12);
+  });
+}
+setTimeout(initGrowthChart, 800);
+
+/* ─── THEME TOGGLE ─── */
+const themeBtn = document.getElementById('theme-btn');
+const html = document.documentElement;
+const savedTheme = localStorage.getItem('spike-theme') || 'light';
+html.setAttribute('data-theme', savedTheme);
+
+themeBtn.addEventListener('click', () => {
+  const currentTheme = html.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('spike-theme', newTheme);
+  
+  // Re-init charts for color updates if needed
+  initGrowthChart();
+});
+
+/* ─── FAQ ACCORDION ─── */
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>

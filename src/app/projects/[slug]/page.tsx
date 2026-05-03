@@ -45,10 +45,10 @@ const projectData: any = {
     description: "A next-generation, AI-driven signal intelligence platform built on the Base Layer 2 network, featuring a rigorously engineered deflationary tokenomics model.",
     problem: "Most signal projects fail because their token value is tied solely to hype. They lack independent buy pressure mechanisms decoupled from retail trading volume.",
     solution: "Spike-AI employs a 19% Genesis Burn and a bi-weekly Bot-Profit Burn engine, creating a self-sustaining economy where bot-trading activity actively strengthens the token.",
-    liveLink: "https://spikebot.pace.finance/",
+    liveLink: "/spike-ai.html",
     images: ["/commerce_dashboard_ui_1776563745349.png", "/commerce_dashboard_ui_1776563745349.png", "/commerce_dashboard_ui_1776563745349.png"]
   },
-  fastfood: {
+  craveit: {
     title: "Crave It",
     tagline: "Sell Food Online. Keep Every Rand.",
     description: "A zero-commission food ordering and restaurant management platform built exclusively for South African restaurants. Crave It gives every restaurant their own branded ordering page, PayFast ZAR payouts, and a live operations dashboard — without paying Uber Eats or Mr D a cent.",

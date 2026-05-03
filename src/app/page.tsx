@@ -21,7 +21,7 @@ export default function Home() {
     { slug: "brosky", name: "Brosky", tagline: "Infrastructure for Male Connection", image: "/hr_system_analytics_1776563802392.png" },
     { slug: "jama", name: "Jama", tagline: "High-Utility Connection", image: "/jama_ui.png" },
     { slug: "spikebot", name: "Spike-AI", tagline: "Decentralized Intelligence ($SPIKE)", image: "/commerce_dashboard_ui_1776563745349.png" },
-    { slug: "fastfood", name: "Crave It", tagline: "Sell Food Online. Keep Every Rand.", image: "/images/craveit hero 1.png" },
+    { slug: "craveit", name: "Crave It", tagline: "Sell Food Online. Keep Every Rand.", image: "/images/craveit hero 1.png" },
   ];
 
   useEffect(() => {
@@ -331,7 +331,7 @@ export default function Home() {
               <ul>
                 <li><Link href="/projects/finance">Pace Finance</Link></li>
                 <li><Link href="/projects/spikebot">Spike-AI</Link></li>
-                <li><Link href="/projects/brosky">Brosky</Link></li>
+                <li><Link href="/projects/craveit">Crave It</Link></li>
               </ul>
             </div>
             <div className={footerStyles.footerLinks}>
