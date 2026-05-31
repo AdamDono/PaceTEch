@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
-import styles from "./page.module.css";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
 import aboutStyles from "./about/about.module.css";
-import projStyles from "./projects.module.css";
-import footerStyles from "./footer.module.css";
 import capStyles from "./capabilities.module.css";
+import footerStyles from "./footer.module.css";
+import styles from "./page.module.css";
+import projStyles from "./projects.module.css";
 import trustStyles from "./trust.module.css";
+
+const Hero3D = dynamic(() => import('./Hero3D'), { ssr: false });
 
 export default function Home() {
   const companies = [
@@ -47,6 +50,8 @@ export default function Home() {
 
       {/* SECTION 01: HERO */}
       <section id="home" className={`${styles.hero} reveal`}>
+        <div className={styles.glowOrb}></div>
+        <Hero3D />
         <div className={styles.animateReveal}>
           <h1 className={styles.title}>
             Engineering <br />
@@ -57,6 +62,10 @@ export default function Home() {
           <p className={styles.heroText}>
             We build high-performance web applications and custom software that help businesses scale, automate, and dominate their market. We turn complex concepts into robust, profit-driving ecosystems.
           </p>
+          <div className={styles.ctaWrapper}>
+            <Link href="#contact" className={styles.primaryBtn}>Start a Project</Link>
+            <Link href="#projects" className={styles.secondaryBtn}>Explore Our Work</Link>
+          </div>
         </div>
         <div className={styles.marqueeWrapper}>
           <div className={styles.marquee}>
