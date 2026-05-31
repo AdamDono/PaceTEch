@@ -41,12 +41,37 @@ export default function Home() {
     const targets = document.querySelectorAll(".reveal");
     targets.forEach(el => observer.observe(el));
 
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      // 1. Parallax for Grid Background
+      const grid = document.getElementById('parallax-grid');
+      if (grid) {
+        grid.style.transform = `translateY(${window.scrollY * 0.4}px)`;
+      }
+
+      // 2. Process Timeline Progress
+      const processSection = document.getElementById('process');
+      if (processSection) {
+        const rect = processSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const scrolled = (windowHeight * 0.6) - rect.top; // Start filling when section is 60% down
+        let progress = scrolled / (rect.height * 0.7); // Finish when 70% scrolled through
+        progress = Math.max(0, Math.min(1, progress));
+        processSection.style.setProperty('--progress', progress.toString());
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Init on load
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
     <main className={styles.main}>
-      <div className={styles.gridBackground}></div>
+      <div id="parallax-grid" className={styles.gridBackground}></div>
 
       {/* SECTION 01: HERO */}
       <section id="home" className={`${styles.hero} reveal`}>
@@ -140,7 +165,7 @@ export default function Home() {
       </section>
 
       {/* TRUST BUILDER 02: PROCESS */}
-      <section className={`${trustStyles.processSection} reveal`}>
+      <section id="process" className={`${trustStyles.processSection} reveal`}>
         <div className="container">
           <div className={trustStyles.processHeader}>
             <span className={trustStyles.processLabel}>How We Work</span>

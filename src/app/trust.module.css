@@ -76,11 +76,24 @@
   top: 28px;
   left: calc(12.5%);
   right: calc(12.5%);
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--active-orange) 100%);
-  opacity: 0.2;
+  height: 2px;
+  background: var(--border);
+  opacity: 0.5;
   pointer-events: none;
   z-index: 0;
+}
+
+.processGrid::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  left: calc(12.5%);
+  width: calc(75% * var(--progress, 0));
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--active-orange) 100%);
+  pointer-events: none;
+  z-index: 0;
+  transition: width 0.1s ease-out;
 }
 
 .processStep {
