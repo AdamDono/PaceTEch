@@ -14,46 +14,48 @@ function FloatingShapes() {
 
   useFrame((state) => {
     if (group.current) {
-      group.current.rotation.y = state.clock.elapsedTime * 0.05;
+      // Gentle up/down bobbing for the whole group, NO carousel rotation so they stay on the sides
       group.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
   });
 
   return (
     <group ref={group}>
-      <Float speed={2} rotationIntensity={2} floatIntensity={2}>
-        <mesh position={[-4, 2, -2]} material={materialBlue}>
-          <icosahedronGeometry args={[0.5, 0]} />
+      {/* LEFT SIDE SHAPES */}
+      <Float speed={2} rotationIntensity={3} floatIntensity={2}>
+        <mesh position={[-6, 2, -2]} material={materialBlue}>
+          <icosahedronGeometry args={[0.3, 0]} />
         </mesh>
       </Float>
       
-      <Float speed={1.5} rotationIntensity={1.5} floatIntensity={2}>
-        <mesh position={[4.5, 2.5, -3]} material={materialOrange}>
-          <torusGeometry args={[0.4, 0.15, 16, 32]} />
+      <Float speed={2.5} rotationIntensity={3} floatIntensity={1.5}>
+        <mesh position={[-7, -1, -4]} material={materialGlass}>
+          <boxGeometry args={[0.4, 0.4, 0.4]} />
+        </mesh>
+      </Float>
+
+      <Float speed={1.7} rotationIntensity={3} floatIntensity={2}>
+        <mesh position={[-5.5, -3, -3]} material={materialOrange}>
+          <cylinderGeometry args={[0.2, 0.2, 0.5, 32]} />
         </mesh>
       </Float>
       
-      <Float speed={2.5} rotationIntensity={2} floatIntensity={1.5}>
-        <mesh position={[-5, -1, -4]} material={materialGlass}>
-          <boxGeometry args={[0.7, 0.7, 0.7]} />
+      {/* RIGHT SIDE SHAPES */}
+      <Float speed={1.5} rotationIntensity={3} floatIntensity={2}>
+        <mesh position={[6, 2.5, -3]} material={materialOrange}>
+          <torusGeometry args={[0.25, 0.1, 16, 32]} />
         </mesh>
       </Float>
       
-      <Float speed={1.8} rotationIntensity={1.5} floatIntensity={2.5}>
-        <mesh position={[5, -1.5, -2]} material={materialBlue}>
-          <coneGeometry args={[0.5, 1, 32]} />
+      <Float speed={1.8} rotationIntensity={3} floatIntensity={2.5}>
+        <mesh position={[6.5, -0.5, -2]} material={materialBlue}>
+          <coneGeometry args={[0.3, 0.6, 32]} />
         </mesh>
       </Float>
       
-      <Float speed={2.2} rotationIntensity={2.5} floatIntensity={1.8}>
-        <mesh position={[2.5, -3, -1]} material={materialOrange}>
-          <sphereGeometry args={[0.45, 32, 32]} />
-        </mesh>
-      </Float>
-      
-      <Float speed={1.7} rotationIntensity={2} floatIntensity={2}>
-        <mesh position={[-2.5, -2.5, -3]} material={materialGlass}>
-          <cylinderGeometry args={[0.35, 0.35, 0.8, 32]} />
+      <Float speed={2.2} rotationIntensity={3} floatIntensity={1.8}>
+        <mesh position={[5.5, -3.5, -1]} material={materialGlass}>
+          <sphereGeometry args={[0.3, 32, 32]} />
         </mesh>
       </Float>
     </group>
