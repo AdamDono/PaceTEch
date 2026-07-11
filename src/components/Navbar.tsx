@@ -79,7 +79,12 @@ export default function Navbar() {
             <span className={`${styles.bar} ${isMobileMenuOpen ? styles.barOpen2 : ""}`}></span>
           </div>
 
-          <div className={styles.navRightPlaceholder}></div>
+          {/* Desktop CTA Button */}
+          <div className={styles.navRight}>
+            <button onClick={() => handleNavClick("contact")} className={styles.navCTA}>
+              Start Project
+            </button>
+          </div>
         </nav>
       </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
-import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import aboutStyles from "./about/about.module.css";
 import capStyles from "./capabilities.module.css";
@@ -9,6 +9,59 @@ import footerStyles from "./footer.module.css";
 import styles from "./page.module.css";
 import projStyles from "./projects.module.css";
 import trustStyles from "./trust.module.css";
+
+interface AnimatedCounterProps {
+  target: number;
+  suffix?: string;
+  duration?: number;
+}
+
+function AnimatedCounter({ target, suffix = "", duration = 1500 }: AnimatedCounterProps) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const elementRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          let start = 0;
+          const end = target;
+          if (start === end) return;
+
+          const totalMiliseconds = duration;
+          const incrementTime = 20; // 50 frames per second
+          const step = end / (totalMiliseconds / incrementTime);
+          
+          const timer = setInterval(() => {
+            start += step;
+            if (start >= end) {
+              clearInterval(timer);
+              setCount(end);
+            } else {
+              setCount(Math.floor(start));
+            }
+          }, incrementTime);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
+      }
+    };
+  }, [target, duration, hasAnimated]);
+
+  return <span ref={elementRef}>{count}{suffix}</span>;
+}
 
 const Hero3D = dynamic(() => import('./Hero3D'), { ssr: false });
 
@@ -41,6 +94,20 @@ export default function Home() {
     const targets = document.querySelectorAll(".reveal");
     targets.forEach(el => observer.observe(el));
 
+    const hero = document.getElementById('home');
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!hero) return;
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      hero.style.setProperty('--mouse-x', `${x}px`);
+      hero.style.setProperty('--mouse-y', `${y}px`);
+    };
+
+    if (hero) {
+      hero.addEventListener('mousemove', handleMouseMove);
+    }
+
     const handleScroll = () => {
       // 1. Parallax for Grid Background
       const grid = document.getElementById('parallax-grid');
@@ -66,6 +133,9 @@ export default function Home() {
     return () => {
       observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
+      if (hero) {
+        hero.removeEventListener('mousemove', handleMouseMove);
+      }
     };
   }, []);
 
@@ -133,6 +203,32 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TRUST BUILDER 01: STATS */}
+      <section className={`${trustStyles.statsRow} reveal`}>
+        <div className="container">
+          <div className={trustStyles.statsGrid}>
+            <div className={trustStyles.statItem}>
+              <span className={trustStyles.statNumber}>
+                <AnimatedCounter target={50} suffix="+" />
+              </span>
+              <span className={trustStyles.statLabel}>Custom Platforms Built</span>
+            </div>
+            <div className={trustStyles.statItem}>
+              <span className={trustStyles.statNumber}>
+                R<AnimatedCounter target={50} suffix="M+" />
+              </span>
+              <span className={trustStyles.statLabel}>Client Revenue Generated</span>
+            </div>
+            <div className={trustStyles.statItem}>
+              <span className={trustStyles.statNumber}>
+                <AnimatedCounter target={99} suffix=".9%" />
+              </span>
+              <span className={trustStyles.statLabel}>Infrastructure Uptime</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SECTION 03: PROJECTS */}
       <section id="projects" className={`${projStyles.projectsSection} reveal`}>
         <div className="container">
@@ -145,7 +241,31 @@ export default function Home() {
 
           <div className={projStyles.projectGrid}>
             {projects.map((proj) => (
-              <div key={proj.slug} className={projStyles.projectCard}>
+              <div 
+                key={proj.slug} 
+                className={projStyles.projectCard}
+                onMouseMove={(e) => {
+                  const card = e.currentTarget;
+                  const rect = card.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  const centerX = rect.width / 2;
+                  const centerY = rect.height / 2;
+                  const rotateX = ((centerY - y) / centerY) * 7;
+                  const rotateY = ((x - centerX) / centerX) * 7;
+                  card.style.transition = 'transform 0.1s ease-out, border-color 0.3s ease, box-shadow 0.3s ease';
+                  card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.01)`;
+                  card.style.borderColor = 'var(--accent)';
+                  card.style.boxShadow = '0 30px 60px rgba(0, 82, 255, 0.12)';
+                }}
+                onMouseLeave={(e) => {
+                  const card = e.currentTarget;
+                  card.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+                  card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)';
+                  card.style.borderColor = '';
+                  card.style.boxShadow = '';
+                }}
+              >
                 <div className={projStyles.cardVisual}>
                    {proj.image ? (
                      <img src={proj.image} alt={proj.name} className={projStyles.cardImage} />
@@ -273,7 +393,7 @@ export default function Home() {
             </h2>
             <div className={trustStyles.foundersWrapper}>
               <div className={trustStyles.founderInfo}>
-                <div className={trustStyles.founderAvatar}></div>
+                <img src="/images/adam_dono.png" className={trustStyles.founderAvatar} alt="Adam Dono" />
                 <div className={trustStyles.founderDetails}>
                   <span className={trustStyles.founderName}>Adam Dono</span>
                   <span className={trustStyles.founderTitle}>Co-founder & CEO</span>
