@@ -209,13 +209,13 @@ export default function Home() {
           <div className={trustStyles.statsGrid}>
             <div className={trustStyles.statItem}>
               <span className={trustStyles.statNumber}>
-                <AnimatedCounter target={50} suffix="+" />
+                <AnimatedCounter target={10} suffix="+" />
               </span>
-              <span className={trustStyles.statLabel}>Custom Platforms Built</span>
+              <span className={trustStyles.statLabel}>Projects Built</span>
             </div>
             <div className={trustStyles.statItem}>
               <span className={trustStyles.statNumber}>
-                R<AnimatedCounter target={50} suffix="M+" />
+                R<AnimatedCounter target={500} suffix="k+" />
               </span>
               <span className={trustStyles.statLabel}>Client Revenue Generated</span>
             </div>
@@ -397,6 +397,13 @@ export default function Home() {
                 <div className={trustStyles.founderDetails}>
                   <span className={trustStyles.founderName}>Adam Dono</span>
                   <span className={trustStyles.founderTitle}>Co-founder & CEO</span>
+                </div>
+              </div>
+              <div className={trustStyles.founderInfo}>
+                <img src="/images/sihle_mofokeng.png" className={trustStyles.founderAvatar} alt="Sihle Mofokeng" />
+                <div className={trustStyles.founderDetails}>
+                  <span className={trustStyles.founderName}>Sihle Mofokeng</span>
+                  <span className={trustStyles.founderTitle}>Co-founder & CTO</span>
                 </div>
               </div>
             </div>
